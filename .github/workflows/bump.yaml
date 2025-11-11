@@ -1,0 +1,30 @@
+name: bump flake.lock
+
+on:
+  schedule:
+    # https://jasonet.co/posts/scheduled-actions/#the-cron-syntax
+    - cron: 0 5 * * 1 # 6:00 UTC+2
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    name: ---
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - uses: cachix/install-nix-action@v17
+
+      - run: nix flake update
+      - uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit-message: bump flake.nix
+          commit-user_name: Flake Bot
+          commit-author: Flake Bot <actions@github.com>
+          branch: main
+          file_pattern: flake.lock
+          skip_dirty_check: false
+          skip_fetch: true

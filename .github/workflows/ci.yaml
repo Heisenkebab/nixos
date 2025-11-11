@@ -1,0 +1,36 @@
+name: ci
+
+on: [ push, pull_request ]
+
+jobs:
+  format:
+    name: format
+
+    runs-on: ubuntu-latest
+
+    steps:
+        - uses: actions/checkout@v3
+        - uses: cachix/install-nix-action@v17
+          with:
+            install_url: https://nixos.org/nix/install
+            extra_nix_config: |
+              auto-optimise-store = true
+              experimental-features = nix-command flakes
+        - run: nix run nixpkgs#alejandra -- -c .
+
+  lint:
+    name: lint
+
+    runs-on: ubuntu-latest
+
+    steps:
+        - uses: actions/checkout@v3
+        - uses: cachix/install-nix-action@v17
+          with:
+            install_url: https://nixos.org/nix/install
+            extra_nix_config: |
+              auto-optimise-store = true
+              experimental-features = nix-command flakes
+        - run: nix flake check
+        - name: deadnix check
+          run: nix run github:astro/deadnix -- -f
