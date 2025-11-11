@@ -17,5 +17,8 @@
     hyprpaper
     hyprutils
     hyprcursor
+
+    # Util
+    blueman
   ];
 }

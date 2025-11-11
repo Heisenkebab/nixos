@@ -2,7 +2,7 @@
 _: {
   networking = {
     useDHCP = false;
-    hostName = "fujitsu-nixos";
+    hostName = "sell";
 
     # Issue with DNS resolution (/etc/resolv.conf)
     resolvconf.dnsExtensionMechanism = false;

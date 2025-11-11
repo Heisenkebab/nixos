@@ -13,4 +13,8 @@ _: {
     TTYVHangup = true;
     TTYVTDisallocate = true;
   };
+  systemd.user.services.onedrive = {
+    enable = true;
+    after = ["network.target"];
+  };
 }

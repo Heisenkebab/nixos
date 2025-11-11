@@ -18,9 +18,9 @@
 
   time.timeZone = "Europe/Vienna";
 
-  users.users.heisenkebab= {
+  users.users.heisenkebab = {
     isNormalUser = true;
-    extraGroups = ["wheel" "input" "vboxusers"];
+    extraGroups = ["wheel" "input" "vboxusers" "docker"];
   };
 
   programs.hyprland = {
