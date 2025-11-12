@@ -6,6 +6,7 @@
     brave
     ghostty
     nautilus
+    vscode
 
     # waybar
     waybar

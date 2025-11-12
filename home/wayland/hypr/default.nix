@@ -35,7 +35,7 @@ _: {
         kb_layout = "de, us";
         kb_options = [
           "grp:alt_shift_toggle"
-          "caps:swapeescape"
+          "caps:escape"
         ];
       };
 
@@ -182,14 +182,14 @@ _: {
 
       windowrulev2 = [
         "suppressevent maximize, class:.*"
-        "workspace 1, class:Brave-browser"
-        "workspace 2, class:ghostty"
+        "workspace 2, class:Brave-browser"
+        "workspace 1, class:ghostty"
       ];
 
       windowrule = [
         "float,class:.waypaper-wrapped"
-        "move, 1, class:Brave-browser"
-        "move, 2, class:ghostty"
+        "move, 2, class:Brave-browser"
+        "move, 1, class:ghostty"
       ];
     };
 

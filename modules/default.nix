@@ -4,5 +4,7 @@ _: {
     ./apps.nix
     ./languages.nix
     ./essentials.nix
+    ./security.nix
+    ./security.nix
   ];
 }
