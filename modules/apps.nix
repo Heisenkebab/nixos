@@ -6,7 +6,11 @@
     brave
     ghostty
     nautilus
-    vscode
+    vscode-with-extensions
+
+    #Spotify
+    spotify
+    spicetify-cli
 
     # waybar
     waybar

@@ -102,8 +102,8 @@ _: {
         "waybar &"
         "hyprpaper &"
         "hypridle &"
-        "[workspace 1 silent] brave"
-        "[workspace 2 silent] ghostty"
+        "[workspace 2 silent] brave"
+        "[workspace 1 silent] ghostty"
       ];
 
       # Keybindings
@@ -182,6 +182,7 @@ _: {
 
       windowrulev2 = [
         "suppressevent maximize, class:.*"
+        "opacity 0.9, class:Code"
         "workspace 2, class:Brave-browser"
         "workspace 1, class:ghostty"
       ];

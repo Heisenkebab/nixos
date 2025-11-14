@@ -39,6 +39,7 @@
     minicom
 
     # gui
+    jetbrains.datagrip
     jetbrains.rider
     jetbrains.idea-ultimate
   ];

@@ -1,4 +1,8 @@
 _: {
+  imports = [
+    ./modules
+  ];
+
   programs.waybar = {
     enable = true;
     style = builtins.readFile ./styles/style.css;
@@ -12,24 +16,22 @@ _: {
         margin = "6 8 4 8";
 
         modules-left = [
-          "custom/menu"
           "hyprland/workspaces"
-          "hyprland/language"
-          "keyboard-state"
         ];
 
         modules-center = [
+          "temperature"
+          "memory"
+          "cpu"
+          "custom/menu"
           "clock"
+          "battery"
+          "custom/network"
         ];
 
         modules-right = [
           "pulseaudio"
-          "battery"
-          "network"
-          "custom/bitrate"
-          "memory"
           "backlight"
-          "custom/power"
         ];
 
         # module settings
@@ -50,26 +52,52 @@ _: {
           };
         };
 
-        "hyprland/language" = {
-          format = "{shortDescription} ";
-          on-click = "hyprctl switchxkblayout current next";
-        };
-
-        "keyboard-state" = {
-          capslock = true;
-          format = "caps {icon}";
-          format-icons = {
-            locked = "";
-            unlocked = "";
+        "battery" = {
+          format = "{icon} {capacity}%";
+          format-alt = "{icon}";
+          format-charging = " {capacity}%";
+          format-plugged = " {capacity}%";
+          states = {
+            high = 80;
+            medium = 50;
+            low = 20;
+            critical = 4;
           };
+          format-icons = [
+            ""
+            ""
+            ""
+            ""
+            ""
+            ""
+          ];
         };
 
+        cpu = {
+          format = "{usage}% ";
+        };
+
+        "temperature" = {
+          format = "{temperatureC}°C ";
+        };
+        "backlight" = {
+          format = "{icon} {percent}%";
+          format-icons = [
+            "󰃞"
+            "󰃟"
+            "󰃠"
+          ];
+          tooltip = false;
+        };
         "clock" = {
           tooltip = true;
           tooltip-format = "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>";
           format = "{:%a, %d %b, %I:%M %p}";
         };
-
+        "memory" = {
+          format = "  {used}GB";
+          on-click = "kitty -e btop";
+        };
         "pulseaudio" = {
           scroll-step = 3;
           format = "{icon}  {volume}% {format_source}";
@@ -94,27 +122,6 @@ _: {
           tooltip = false;
         };
 
-        "battery" = {
-          format = "{icon} {capacity}%";
-          format-alt = "{icon}";
-          format-charging = " {capacity}%";
-          format-plugged = " {capacity}%";
-          states = {
-            high = 80;
-            medium = 50;
-            low = 20;
-            critical = 4;
-          };
-          format-icons = [
-            ""
-            ""
-            ""
-            ""
-            ""
-            ""
-          ];
-        };
-
         "network" = {
           format-wifi = "";
           format-ethernet = "󰈀";
@@ -124,28 +131,6 @@ _: {
           tooltip-format-ethernet = "{ifname}: {ipaddr}/{cidr}";
           tooltip-format = " {bandwidthUpBits}  {bandwidthDownBits}\n{ifname}\n{ipaddr}/{cidr}\n";
           on-click = "sleep 0.1 && nm-connection-editor";
-        };
-
-        "custom/bitrate" = {
-          exec = builtins.readFile ./modules/bitrate.sh;
-          interval = 15;
-          tooltip = false;
-          format = "<span size='x-small'>{}</span>";
-        };
-
-        "memory" = {
-          format = "  {used}GB";
-          on-click = "kitty -e btop";
-        };
-
-        "backlight" = {
-          format = "{icon} {percent}%";
-          format-icons = [
-            "󰃞"
-            "󰃟"
-            "󰃠"
-          ];
-          tooltip = false;
         };
 
         "custom/power" = {

@@ -97,7 +97,7 @@ return {
                     handlers = vim.tbl_deep_extend("force", {}, default_handlers, config.handlers or {}),
                     on_attach = on_attach,
                     settings = config.settings,
-                })
+                })           
             end
 
             -- Configure borderd for LspInfo ui

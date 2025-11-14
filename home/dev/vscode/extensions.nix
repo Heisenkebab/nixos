@@ -7,6 +7,9 @@
       ms-python.python
       ms-python.debugpy
       zhuangtongfa.material-theme
+      esbenp.prettier-vscode
+      usernamehw.errorlens
+      eamodio.gitlens
       (pkgs.vscode-utils.buildVscodeMarketplaceExtension {
         mktplcRef = {
           name = "material-icon-theme";

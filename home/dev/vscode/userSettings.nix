@@ -5,6 +5,8 @@
       "editor.formatOnSave" = true;
       "workbench.sideBar.location" = "right";
       "workbench.colorTheme" = "One Dark Pro Night Flat";
+      "editor.cursorBlinking" = "expand";
+      "workbench.iconTheme" = "material-icon-theme";
     };
-  }
+  };
 }
