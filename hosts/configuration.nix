@@ -2,7 +2,9 @@
   inputs,
   pkgs,
   ...
-}: {
+}: let
+  g = import ../globals.nix;
+in {
   imports = [
     inputs.home-manager.nixosModules.default
 
@@ -18,7 +20,7 @@
 
   time.timeZone = "Europe/Vienna";
 
-  users.users.heisenkebab = {
+  users.users.${g.username} = {
     isNormalUser = true;
     extraGroups = ["wheel" "input" "vboxusers" "docker"];
   };

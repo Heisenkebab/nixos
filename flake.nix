@@ -19,8 +19,10 @@
     nixpkgs,
     home-manager,
     ...
-  } @ inputs: {
-    nixosConfigurations.heisenkebab= nixpkgs.lib.nixosSystem {
+  } @ inputs: let
+    g = import ./globals.nix;
+  in {
+    nixosConfigurations.${g.username} = nixpkgs.lib.nixosSystem {
       system = "x86-64-linux";
       specialArgs = {inherit inputs;};
       modules = [
@@ -30,7 +32,7 @@
           home-manager = {
             useGlobalPkgs = true;
             useUserPackages = true;
-            users.heisenkebab= import ./hosts/home.nix;
+            users.${g.username} = import ./hosts/home.nix;
             backupFileExtension = "backup";
           };
         }
