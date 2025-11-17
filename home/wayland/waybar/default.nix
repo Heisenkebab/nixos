@@ -16,26 +16,44 @@ _: {
         margin = "6 8 4 8";
 
         modules-left = [
+          "custom/left_div"
           "hyprland/workspaces"
+          "custom/right_div#1"
         ];
 
         modules-center = [
+          "custom/left_div#2"
           "temperature"
+          "custom/left_div#3"
           "memory"
+          "custom/left_div#4"
           "cpu"
-          "custom/menu"
-          "clock"
-          "battery"
-          "custom/network"
+          "custom/left_inv#1"
+          "custom/left_div#5"
+          "custom/distro"
+          "custom/right_div#2"
+          "custom/right_inv#1"
+          "clock#time"
+          "custom/right_div#3"
+          "clock#date"
+          "custom/right_div#4"
+          "network"
+          "bluetooth"
+          "custom/right_div#5"
         ];
 
         modules-right = [
           "pulseaudio"
+          "custom/left_div#6"
           "backlight"
+          "custom/left_div#8"
+          "battery"
+          "custom/left_inv#2"
+          "custom/power"
         ];
 
         # module settings
-        "custom/menu" = {
+        "custom/distro" = {
           format = "";
           on-click = "wofi --show drun -I -m -i";
           tooltip = false;
@@ -54,14 +72,11 @@ _: {
 
         "battery" = {
           format = "{icon} {capacity}%";
-          format-alt = "{icon}";
-          format-charging = " {capacity}%";
-          format-plugged = " {capacity}%";
           states = {
             high = 80;
             medium = 50;
             low = 20;
-            critical = 4;
+            critical = 10;
           };
           format-icons = [
             ""
@@ -73,12 +88,15 @@ _: {
           ];
         };
 
-        cpu = {
-          format = "{usage}% ";
+        "cpu" = {
+          format = " {usage}%";
+          tooltip = false;
         };
 
         "temperature" = {
-          format = "{temperatureC}°C ";
+          format = " {temperatureC}°C";
+          critical-threshold = 80;
+          tooltip = false;
         };
         "backlight" = {
           format = "{icon} {percent}%";
@@ -136,6 +154,110 @@ _: {
         "custom/power" = {
           format = "󰐥";
           on-click = "sleep 0.1 && loginctl lock-session && hyprlock";
+          tooltip = false;
+        };
+        /*
+        --------------------
+          left dividers
+        --------------------
+        */
+        "custom/left_div#1" = {
+          format = "";
+          tooltip = false;
+        };
+        "custom/left_div#2" = {
+          format = "";
+          tooltip = false;
+        };
+        "custom/left_div#3" = {
+          format = "";
+          tooltip = false;
+        };
+        "custom/left_div#4" = {
+          format = "";
+          tooltip = false;
+        };
+        "custom/left_div#5" = {
+          format = "";
+          tooltip = false;
+        };
+        "custom/left_div#6" = {
+          format = "";
+          tooltip = false;
+        };
+        "custom/left_div#7" = {
+          format = "";
+          tooltip = false;
+        };
+        "custom/left_div#8" = {
+          format = "";
+          tooltip = false;
+        };
+
+        /*
+        inverse
+        */
+        "custom/left_inv#1" = {
+          format = "";
+          tooltip = false;
+        };
+        "custom/left_inv#2" = {
+          format = "";
+          tooltip = false;
+        };
+
+        /*
+        --------------------
+          right dividers
+        --------------------
+        */
+        "custom/right_div" = {
+          "format" = "";
+          "tooltip" = false;
+        };
+
+        "custom/left_div" = {
+          "format" = "";
+          "tooltip" = false;
+        };
+
+        # Inverse Dividers
+        "custom/right_inv" = {
+          "format" = "";
+          "tooltip" = false;
+        };
+
+        "custom/left_inv" = {
+          "format" = "";
+          "tooltip" = false;
+        };
+
+        "custom/right_div#1" = {
+          format = "";
+          tooltip = false;
+        };
+        "custom/right_div#2" = {
+          format = "";
+          tooltip = false;
+        };
+        "custom/right_div#3" = {
+          format = "";
+          tooltip = false;
+        };
+        "custom/right_div#4" = {
+          format = "";
+          tooltip = false;
+        };
+        "custom/right_div#5" = {
+          format = "";
+          tooltip = false;
+        };
+
+        /*
+        inverse
+        */
+        "custom/right_inv#1" = {
+          format = "";
           tooltip = false;
         };
       }

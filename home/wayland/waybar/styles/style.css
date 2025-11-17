@@ -37,11 +37,6 @@
   border-radius: 10px 0 0 10px;
   background: #383c4a; }
 
-#keyboard-state {
-  padding: 4px 12px 4px 12px;
-  border-radius: 0 10px 10px 0;
-  background: #383c4a; }
-
 #clock {
   padding: 4px 8px;
   border-radius: 10px;
@@ -61,14 +56,20 @@
 #custom-power {
   margin: 0 8px; }
 
+#battery.charging {
+  color: green; }
+
+#battery.critical #cpu.critical #memory.critical #temperature.critical {
+  color: red; }
+
+#memory.warning,
+#cpu.warning,
+#battery.warning {
+  color: orange; }
+
 #network {
   padding: 4px 8px;
   border-radius: 10px 0 0 10px;
-  background: #383c4a; }
-
-#custom-bitrate {
-  padding: 0 8px;
-  border-radius: 0 10px 10px 0;
   background: #383c4a; }
 
 /*# sourceMappingURL=style.css.map */

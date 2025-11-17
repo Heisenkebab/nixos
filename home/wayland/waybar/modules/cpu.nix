@@ -1,9 +1,0 @@
-_: {
-  programs.waybar = { 
-    settings = [
-        {
-
-        }
-    ]; 
-  };
-}

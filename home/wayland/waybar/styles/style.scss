@@ -57,12 +57,6 @@
     background: $bg;
   }
 
-  #keyboard-state {
-    padding: 4px 12px 4px 12px;
-    border-radius: 0 $radius $radius 0;
-    background: $bg;
-  }
-
   // Center module
   #clock {
     padding: 4px 8px;
@@ -87,14 +81,22 @@
     margin: 0 8px;
   }
 
+  #battery.charging {
+    color: green;
+  }
+
+  #battery.critical #cpu.critical #memory.critical #temperature.critical {
+    color: red;
+  }
+
+  #memory.warning,
+  #cpu.warning,
+  #battery.warning {
+    color: orange;
+  }
+
   #network {
     padding: 4px 8px;
     border-radius: $radius 0 0 $radius;
-    background: $bg;
-  }
-
-  #custom-bitrate {
-    padding: 0 8px;
-    border-radius: 0 $radius $radius 0;
     background: $bg;
   }
