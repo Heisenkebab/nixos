@@ -1,27 +1,21 @@
-_: {
-  imports = [
-    ./modules
-  ];
+{lib, ...}: {
+  # imports = [];
 
   programs.waybar = {
     enable = true;
     style = builtins.readFile ./styles/style.css;
-
-    # nerd fonts symbols-only is required for some icons to show
     settings = [
       {
-        layer = "top";
-        position = "top";
-        height = 32;
-        margin = "6 8 4 8";
-
         modules-left = [
-          "custom/left_div"
+          "group/user"
+          "custom/left_div#1"
           "hyprland/workspaces"
           "custom/right_div#1"
+          "hyprland/window"
         ];
 
         modules-center = [
+          "hyprland/windowcount"
           "custom/left_div#2"
           "temperature"
           "custom/left_div#3"
@@ -33,6 +27,7 @@ _: {
           "custom/distro"
           "custom/right_div#2"
           "custom/right_inv#1"
+          "idle_inhibitor"
           "clock#time"
           "custom/right_div#3"
           "clock#date"
@@ -43,222 +38,320 @@ _: {
         ];
 
         modules-right = [
-          "pulseaudio"
+          "mpris"
           "custom/left_div#6"
+          "group/pulseaudio"
+          "custom/left_div#7"
           "backlight"
           "custom/left_div#8"
           "battery"
           "custom/left_inv#2"
-          "custom/power"
+          "custom/power_menu"
         ];
 
-        # module settings
-        "custom/distro" = {
-          format = "";
-          on-click = "wofi --show drun -I -m -i";
+        layer = "top";
+        mode = "dock";
+        reload_style_on_change = true;
+
+        backlight = {
+          format = "{icon} {percent}%";
+          format-icons = [
+            ""
+            ""
+            ""
+            ""
+            ""
+            ""
+            ""
+            ""
+            ""
+          ];
+          min-length = 7;
+          max-length = 7;
           tooltip = false;
+        };
+
+        bluetooth = {
+          format = "󰂯";
+          format-disabled = "󰂲";
+          format-off = "󰂲";
+          format-on = "󰂰";
+          format-connected = "󰂱";
+          min-length = 2;
+          max-length = 2;
+          on-click = "kitty -e ~/.config/waybar/scripts/bluetooth.sh";
+          on-click-right = "bluetoothctl power off && notify-send 'Bluetooth Off' -i 'network-bluetooth-inactive' -r 1925";
+          tooltip-format = "Device Addr: {device_address}";
+          tooltip-format-disabled = "Bluetooth Disabled";
+          tooltip-format-off = "Bluetooth Off";
+          tooltip-format-on = "Bluetooth Disconnected";
+          tooltip-format-connected = "Device: {device_alias}";
+          tooltip-format-enumerate-connected = "Device: {device_alias}";
+          tooltip-format-connected-battery = "Device: {device_alias}\nBattery: {device_battery_percentage}%";
+          tooltip-format-enumerate-connected-battery = "Device: {device_alias}\nBattery: {device_battery_percentage}%";
+        };
+
+        memory = {
+          interval = 10;
+          format = "󰘚 {percentage}%";
+          format-warning = "󰀧 {percentage}%";
+          format-critical = "󰀧 {percentage}%";
+          states = {
+            warning = 75;
+            critical = 90;
+          };
+          min-length = 7;
+          max-length = 7;
+          tooltip-format = "Memory Used: {used:0.1f} GB / {total:0.1f} GB";
+        };
+
+        mpris = {
+          format = "{player_icon} {title} - {artist}";
+          format-paused = "{status_icon} {title} - {artist}";
+          tooltip-format = "Playing: {title} - {artist}";
+          tooltip-format-paused = "Paused: {title} - {artist}";
+          player-icons.default = "󰐊";
+          status-icons.paused = "󰏤";
+          max-length = 1000;
+        };
+
+        "group/pulseaudio" = {
+          orientation = "horizontal";
+          modules = ["pulseaudio#output" "pulseaudio#input"];
+          drawer.transition-left-to-right = false;
+        };
+
+        "pulseaudio#output" = {
+          format = "{icon} {volume}%";
+          format-muted = "{icon} {volume}%";
+          format-icons = {
+            default = ["󰕿" "󰖀" "󰕾"];
+            default-muted = "󰝟";
+            headphone = "󰋋";
+            headphone-muted = "󰟎";
+            headset = "󰋎";
+            headset-muted = "󰋐";
+          };
+          min-length = 7;
+          max-length = 7;
+          on-click = "~/.config/waybar/scripts/volume.sh output mute";
+          on-scroll-up = "~/.config/waybar/scripts/volume.sh output raise";
+          on-scroll-down = "~/.config/waybar/scripts/volume.sh output lower";
+          tooltip-format = "Output Device: {desc}";
+        };
+
+        "pulseaudio#input" = {
+          format = "{format_source}";
+          format-source = "󰍬 {volume}%";
+          format-source-muted = "󰍭 {volume}%";
+          min-length = 7;
+          max-length = 7;
+          on-click = "~/.config/waybar/scripts/volume.sh input mute";
+          on-scroll-up = "~/.config/waybar/scripts/volume.sh input raise";
+          on-scroll-down = "~/.config/waybar/scripts/volume.sh input lower";
+          tooltip-format = "Input Device: {desc}";
+        };
+
+        battery = {
+          states.warning = 20;
+          states.critical = 10;
+          format = "{icon} {capacity}%";
+          format-time = "{H} hr {M} min";
+          format-icons = [
+            "󰂎"
+            "󰁻"
+            "󰁼"
+            "󰁽"
+            "󰁾"
+            "󰁿"
+            "󰂀"
+            "󰂁"
+            "󰂂"
+            "󰁹"
+          ];
+          format-charging = "󰉁 {capacity}%";
+          min-length = 7;
+          max-length = 7;
+          tooltip-format = "Discharging: {time}";
+          tooltip-format-charging = "Charging: {time}";
+          events = {
+            on-discharging-warning = "notify-send 'Battery Low (20%)' -i 'battery-020'";
+            on-discharging-critical = "notify-send 'Battery Critical (10%)' -u critical -i 'battery-010'";
+            on-charging-100 = "notify-send 'Battery Full (100%)' -i 'battery-100-charged'";
+          };
+        };
+
+        "clock#time" = {
+          format = "{:%H:%M}";
+          min-length = 5;
+          max-length = 5;
+          tooltip-format = "Standard Time: {:%I:%M %p}";
+        };
+
+        "clock#date" = {
+          format = "󰸗 {:%m-%d}";
+          min-length = 8;
+          max-length = 8;
+          tooltip-format = "{calendar}";
+          calendar = {
+            mode = "month";
+            mode-mon-col = 6;
+            format = {
+              months = "<span alpha='100%'><b>{}</b></span>";
+              days = "<span alpha='90%'>{}</span>";
+              weekdays = "<span alpha='80%'><i>{}</i></span>";
+              today = "<span alpha='100%'><b><u>{}</u></b></span>";
+            };
+          };
+          actions.on-click = "mode";
+        };
+
+        cpu = {
+          interval = 10;
+          format = "󰍛 {usage}%";
+          format-warning = "󰀨 {usage}%";
+          format-critical = "󰀨 {usage}%";
+          min-length = 7;
+          max-length = 7;
+          states = {
+            warning = 75;
+            critical = 90;
+          };
+          tooltip = false;
+        };
+
+        idle_inhibitor = {
+          format = "{icon}";
+          format-icons = {
+            activated = "󰈈";
+            deactivated = "󰈉";
+          };
+          min-length = 3;
+          max-length = 3;
+          tooltip-format-activated = "Keep Screen On: <span text_transform='capitalize'>{status}</span>";
+          tooltip-format-deactivated = "Keep Screen On: <span text_transform='capitalize'>{status}</span>";
+          start-activated = false;
+        };
+
+        network = {
+          interval = 10;
+          format = "󰤨";
+          format-ethernet = "󰈀";
+          format-wifi = "{icon}";
+          format-disconnected = "󰤯";
+          format-disabled = "󰤮";
+          format-icons = [
+            "󰤟"
+            "󰤢"
+            "󰤥"
+            "󰤨"
+          ];
+          min-length = 2;
+          max-length = 2;
+          on-click = "kitty -e ~/.config/waybar/scripts/network.sh";
+          on-click-right = "nmcli radio wifi off && notify-send 'Wi-Fi Disabled' -i 'network-wireless-off' -r 1125";
+          tooltip-format = "Gateway: {gwaddr}";
+          tooltip-format-ethernet = "Interface: {ifname}";
+          tooltip-format-wifi = "Network: {essid}\nIP Addr: {ipaddr}/{cidr}\nStrength: {signalStrength}%\nFrequency: {frequency} GHz";
+          tooltip-format-disconnected = "Wi-Fi Disconnected";
+          tooltip-format-disabled = "Wi-Fi Disabled";
+        };
+
+        temperature = {
+          thermal-zone = 1;
+          critical-threshold = 90;
+          interval = 10;
+          format-critical = "󰀦 {temperatureC}°C";
+          format = "{icon} {temperatureC}°C";
+          format-icons = [
+            "󱃃"
+            "󰔏"
+            "󱃂"
+          ];
+          min-length = 8;
+          max-length = 8;
+          tooltip-format = "Temp in Fahrenheit: {temperatureF}°F";
+        };
+
+        "custom/distro".format = "";
+
+        # All your separators
+        "custom/left_div#1".format = "";
+        "custom/left_div#2".format = "";
+        "custom/left_div#3".format = "";
+        "custom/left_div#4".format = "";
+        "custom/left_div#5".format = "";
+        "custom/left_div#6".format = "";
+        "custom/left_div#7".format = "";
+        "custom/left_div#8".format = "";
+        "custom/left_inv#1".format = "";
+        "custom/left_inv#2".format = "";
+        "custom/right_div#1".format = "";
+        "custom/right_div#2".format = "";
+        "custom/right_div#3".format = "";
+        "custom/right_div#4".format = "";
+        "custom/right_div#5".format = "";
+        "custom/right_inv#1".format = "";
+
+        "custom/power_menu" = {
+          format = "󰤄";
+          on-click = "kitty -e ~/nixos/home/wayland/waybar/scripts/power-menu.sh";
+          tooltip-format = "Power Menu";
+        };
+
+        "group/user" = {
+          orientation = "horizontal";
+          modules = ["custom/trigger" "custom/user"];
+          drawer = {};
+        };
+
+        "custom/trigger" = {
+          format = "󰍜";
+          min-length = 4;
+          max-length = 4;
+          tooltip = false;
+        };
+
+        "custom/user" = {
+          exec = "id -un";
+          format = "{}";
+          tooltip = false;
+        };
+
+        "hyprland/windowcount".format = "[{}]";
+
+        "hyprland/window" = {
+          format = "{}";
+          rewrite = {
+            "" = "Desktop";
+            kitty = "Terminal";
+            zsh = "Terminal";
+            "~" = "Terminal";
+          };
         };
 
         "hyprland/workspaces" = {
           format = "{icon}";
-          active-only = false;
-          on-click = "hyprctl dispatch workspace {name}";
-          on-scroll-up = "hyprctl dispatch workspace e+1 1>/dev/null";
-          on-scroll-down = "hyprctl dispatch workspace e-1 1>/dev/null";
-          presistent-workspaces = {
-            "*" = 3;
-          };
-        };
-
-        "battery" = {
-          format = "{icon} {capacity}%";
-          states = {
-            high = 80;
-            medium = 50;
-            low = 20;
-            critical = 10;
-          };
-          format-icons = [
-            ""
-            ""
-            ""
-            ""
-            ""
-            ""
-          ];
-        };
-
-        "cpu" = {
-          format = " {usage}%";
-          tooltip = false;
-        };
-
-        "temperature" = {
-          format = " {temperatureC}°C";
-          critical-threshold = 80;
-          tooltip = false;
-        };
-        "backlight" = {
-          format = "{icon} {percent}%";
-          format-icons = [
-            "󰃞"
-            "󰃟"
-            "󰃠"
-          ];
-          tooltip = false;
-        };
-        "clock" = {
-          tooltip = true;
-          tooltip-format = "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>";
-          format = "{:%a, %d %b, %I:%M %p}";
-        };
-        "memory" = {
-          format = "  {used}GB";
-          on-click = "kitty -e btop";
-        };
-        "pulseaudio" = {
-          scroll-step = 3;
-          format = "{icon}  {volume}% {format_source}";
-          format-bluetooth = "{volume}% {icon}󰂯 {format_source}";
-          format-bluetooth-muted = "󰍭 {icon}󰂯 {format_source}";
-          format-muted = "󰝟 {format_source}";
-          format-source = "󰍬";
-          format-source-muted = "󰍭";
           format-icons = {
-            headphone = "󰋋";
-            headset = "󰋋";
-            phone = "󰏳";
-            car = "󰄍";
-            default = [
-              "󰕿"
-              "󰖀"
-              "󰕾"
-            ];
+            active = "";
+            default = "";
           };
-          on-click = "sleep 0.1 && pavucontrol";
-          on-click-right = "amixer sset Master toggle";
-          tooltip = false;
+          workspace-taskbar = {};
+          on-scroll-up = "hyprctl dispatch workspace +1";
+          on-scroll-down = "hyprctl dispatch workspace -1";
+          cursor = true;
         };
 
-        "network" = {
-          format-wifi = "";
-          format-ethernet = "󰈀";
-          format-disconnected = "󰖪";
-          format-disabled = "";
-          tooltip-format-wifi = " {essid} {frequency}MHz\nStrength: {signaldBm}dBm ({signalStrength}%)\nIP: {ipaddr}/{cidr}\n {bandwidthUpBits}  {bandwidthDownBits}";
-          tooltip-format-ethernet = "{ifname}: {ipaddr}/{cidr}";
-          tooltip-format = " {bandwidthUpBits}  {bandwidthDownBits}\n{ifname}\n{ipaddr}/{cidr}\n";
-          on-click = "sleep 0.1 && nm-connection-editor";
+        "wlr/taskbar" = {
+          on-click = "activate";
+          ignore-list = ["kitty"];
+          cursor = true;
         };
 
-        "custom/power" = {
-          format = "󰐥";
-          on-click = "sleep 0.1 && loginctl lock-session && hyprlock";
-          tooltip = false;
-        };
-        /*
-        --------------------
-          left dividers
-        --------------------
-        */
-        "custom/left_div#1" = {
-          format = "";
-          tooltip = false;
-        };
-        "custom/left_div#2" = {
-          format = "";
-          tooltip = false;
-        };
-        "custom/left_div#3" = {
-          format = "";
-          tooltip = false;
-        };
-        "custom/left_div#4" = {
-          format = "";
-          tooltip = false;
-        };
-        "custom/left_div#5" = {
-          format = "";
-          tooltip = false;
-        };
-        "custom/left_div#6" = {
-          format = "";
-          tooltip = false;
-        };
-        "custom/left_div#7" = {
-          format = "";
-          tooltip = false;
-        };
-        "custom/left_div#8" = {
-          format = "";
-          tooltip = false;
-        };
-
-        /*
-        inverse
-        */
-        "custom/left_inv#1" = {
-          format = "";
-          tooltip = false;
-        };
-        "custom/left_inv#2" = {
-          format = "";
-          tooltip = false;
-        };
-
-        /*
-        --------------------
-          right dividers
-        --------------------
-        */
-        "custom/right_div" = {
-          "format" = "";
-          "tooltip" = false;
-        };
-
-        "custom/left_div" = {
-          "format" = "";
-          "tooltip" = false;
-        };
-
-        # Inverse Dividers
-        "custom/right_inv" = {
-          "format" = "";
-          "tooltip" = false;
-        };
-
-        "custom/left_inv" = {
-          "format" = "";
-          "tooltip" = false;
-        };
-
-        "custom/right_div#1" = {
-          format = "";
-          tooltip = false;
-        };
-        "custom/right_div#2" = {
-          format = "";
-          tooltip = false;
-        };
-        "custom/right_div#3" = {
-          format = "";
-          tooltip = false;
-        };
-        "custom/right_div#4" = {
-          format = "";
-          tooltip = false;
-        };
-        "custom/right_div#5" = {
-          format = "";
-          tooltip = false;
-        };
-
-        /*
-        inverse
-        */
-        "custom/right_inv#1" = {
-          format = "";
-          tooltip = false;
+        tray = {
+          icon-size = 16;
+          spacing = 12;
+          cursor = true;
         };
       }
     ];
