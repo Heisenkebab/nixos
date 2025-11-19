@@ -10,6 +10,8 @@
       esbenp.prettier-vscode
       usernamehw.errorlens
       eamodio.gitlens
+      bradlc.vscode-tailwindcss
+      prisma.prisma
       (pkgs.vscode-utils.buildVscodeMarketplaceExtension {
         mktplcRef = {
           name = "material-icon-theme";
