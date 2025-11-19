@@ -4,5 +4,6 @@
     swappy
     wl-clipboard-rs
     bibata-cursors
+    openssl_3
   ];
 }

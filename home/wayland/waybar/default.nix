@@ -40,7 +40,7 @@
         modules-right = [
           "mpris"
           "custom/left_div#6"
-          "group/pulseaudio"
+          "pulseaudio#output"
           "custom/left_div#7"
           "backlight"
           "custom/left_div#8"
@@ -79,7 +79,6 @@
           format-connected = "󰂱";
           min-length = 2;
           max-length = 2;
-          on-click = "kitty -e ~/.config/waybar/scripts/bluetooth.sh";
           on-click-right = "bluetoothctl power off && notify-send 'Bluetooth Off' -i 'network-bluetooth-inactive' -r 1925";
           tooltip-format = "Device Addr: {device_address}";
           tooltip-format-disabled = "Bluetooth Disabled";
@@ -115,12 +114,6 @@
           max-length = 1000;
         };
 
-        "group/pulseaudio" = {
-          orientation = "horizontal";
-          modules = ["pulseaudio#output" "pulseaudio#input"];
-          drawer.transition-left-to-right = false;
-        };
-
         "pulseaudio#output" = {
           format = "{icon} {volume}%";
           format-muted = "{icon} {volume}%";
@@ -134,22 +127,8 @@
           };
           min-length = 7;
           max-length = 7;
-          on-click = "~/.config/waybar/scripts/volume.sh output mute";
-          on-scroll-up = "~/.config/waybar/scripts/volume.sh output raise";
-          on-scroll-down = "~/.config/waybar/scripts/volume.sh output lower";
+          scroll-step = 1;
           tooltip-format = "Output Device: {desc}";
-        };
-
-        "pulseaudio#input" = {
-          format = "{format_source}";
-          format-source = "󰍬 {volume}%";
-          format-source-muted = "󰍭 {volume}%";
-          min-length = 7;
-          max-length = 7;
-          on-click = "~/.config/waybar/scripts/volume.sh input mute";
-          on-scroll-up = "~/.config/waybar/scripts/volume.sh input raise";
-          on-scroll-down = "~/.config/waybar/scripts/volume.sh input lower";
-          tooltip-format = "Input Device: {desc}";
         };
 
         battery = {
@@ -248,8 +227,6 @@
           ];
           min-length = 2;
           max-length = 2;
-          on-click = "kitty -e ~/.config/waybar/scripts/network.sh";
-          on-click-right = "nmcli radio wifi off && notify-send 'Wi-Fi Disabled' -i 'network-wireless-off' -r 1125";
           tooltip-format = "Gateway: {gwaddr}";
           tooltip-format-ethernet = "Interface: {ifname}";
           tooltip-format-wifi = "Network: {essid}\nIP Addr: {ipaddr}/{cidr}\nStrength: {signalStrength}%\nFrequency: {frequency} GHz";
@@ -273,29 +250,80 @@
           tooltip-format = "Temp in Fahrenheit: {temperatureF}°F";
         };
 
-        "custom/distro".format = "";
+        "custom/distro" = {
+          format = "";
+          tooltip = false;
+        };
 
         # All your separators
-        "custom/left_div#1".format = "";
-        "custom/left_div#2".format = "";
-        "custom/left_div#3".format = "";
-        "custom/left_div#4".format = "";
-        "custom/left_div#5".format = "";
-        "custom/left_div#6".format = "";
-        "custom/left_div#7".format = "";
-        "custom/left_div#8".format = "";
-        "custom/left_inv#1".format = "";
-        "custom/left_inv#2".format = "";
-        "custom/right_div#1".format = "";
-        "custom/right_div#2".format = "";
-        "custom/right_div#3".format = "";
-        "custom/right_div#4".format = "";
-        "custom/right_div#5".format = "";
-        "custom/right_inv#1".format = "";
+        "custom/left_div#1" = {
+          format = "";
+          tooltip = false;
+        };
+        "custom/left_div#2" = {
+          format = "";
+          tooltip = false;
+        };
+        "custom/left_div#3" = {
+          format = "";
+          tooltip = false;
+        };
+        "custom/left_div#4" = {
+          format = "";
+          tooltip = false;
+        };
+        "custom/left_div#5" = {
+          format = "";
+          tooltip = false;
+        };
+        "custom/left_div#6" = {
+          format = "";
+          tooltip = false;
+        };
+        "custom/left_div#7" = {
+          format = "";
+          tooltip = false;
+        };
+        "custom/left_div#8" = {
+          format = "";
+          tooltip = false;
+        };
+        "custom/left_inv#1" = {
+          format = "";
+          tooltip = false;
+        };
+        "custom/left_inv#2" = {
+          format = "";
+          tooltip = false;
+        };
+        "custom/right_div#1" = {
+          format = "";
+          tooltip = false;
+        };
+        "custom/right_div#2" = {
+          format = "";
+          tooltip = false;
+        };
+        "custom/right_div#3" = {
+          format = "";
+          tooltip = false;
+        };
+        "custom/right_div#4" = {
+          format = "";
+          tooltip = false;
+        };
+        "custom/right_div#5" = {
+          format = "";
+          tooltip = false;
+        };
+        "custom/right_inv#1" = {
+          format = "";
+          tooltip = false;
+        };
 
         "custom/power_menu" = {
           format = "󰤄";
-          on-click = "kitty -e ~/nixos/home/wayland/waybar/scripts/power-menu.sh";
+          on-click = "hyprlock";
           tooltip-format = "Power Menu";
         };
 
