@@ -1,4 +1,4 @@
-_: let
+{pkgs, ...}: let
   g = import ../globals.nix;
 in {
   imports = [
@@ -9,6 +9,13 @@ in {
   home.stateVersion = "25.05";
 
   programs.git.enable = true;
+
+  home.pointerCursor = {
+    gtk.enable = true;
+    package = pkgs.bibata-cursors;
+    name = "Bibata-Modern-Ice";
+    size = 22;
+  };
 
   programs.bash = {
     enable = true;
