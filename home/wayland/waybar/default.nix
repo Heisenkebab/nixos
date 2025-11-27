@@ -168,7 +168,7 @@
         };
 
         "clock#date" = {
-          format = "󰸗 {:%m-%d}";
+          format = "󰸗 {:%d-%m}";
           min-length = 8;
           max-length = 8;
           tooltip-format = "{calendar}";
