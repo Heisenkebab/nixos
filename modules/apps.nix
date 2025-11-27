@@ -25,5 +25,7 @@
 
     # Util
     blueman
+
+    google-chrome
   ];
 }

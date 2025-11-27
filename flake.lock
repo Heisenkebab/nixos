@@ -502,7 +502,8 @@
         "home-manager": "home-manager",
         "hyprland": "hyprland",
         "hyprland-plugins": "hyprland-plugins",
-        "nixpkgs": "nixpkgs_2"
+        "nix-ld": "nix-ld",
+        "nixpkgs": "nixpkgs_3"
       }
     },
     "systems": {

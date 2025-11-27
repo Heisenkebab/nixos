@@ -15,18 +15,25 @@ in {
 
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
-  boot.blacklistedKernelModules = ["kvm" "kvm_intel" "kvm_amd"];
+  boot.blacklistedKernelModules = ["kvm" "kvm_intel"];
   boot.kernelPackages = pkgs.linuxPackages_latest;
 
   time.timeZone = "Europe/Vienna";
 
   users.users.${g.username} = {
     isNormalUser = true;
-    extraGroups = ["wheel" "input" "vboxusers" "docker"];
+    extraGroups = [
+      "wheel"
+      "input"
+      "vboxusers"
+      "docker"
+      "kvm"
+    ];
   };
 
   programs.hyprland = {
     enable = true;
+    xwayland.enable = true;
     package = inputs.hyprland.packages."${pkgs.system}".hyprland;
   };
 

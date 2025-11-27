@@ -8,5 +8,6 @@
     burpsuite
     wireshark
     ghidra
+    mitmproxy
   ];
 }

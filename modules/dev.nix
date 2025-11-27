@@ -24,6 +24,8 @@
     delta
     ffmpeg
     sass
+    gdb
+    jdk24
 
     # tui
     typioca

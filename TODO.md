@@ -1,4 +1,4 @@
 # TODOs
 - [] Add jetbrains plugins
-- [] Rework waybar
+- [x] Rework waybar
 - [] Rework globals
