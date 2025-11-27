@@ -2,6 +2,7 @@
   description = "NixOS basic flake";
   inputs = {
     nixpkgs.url = "nixpkgs/nixos-25.05";
+    nix-ld.url = "github:Mic92/nix-ld";
 
     home-manager = {
       url = "github:nix-community/home-manager/release-25.05";
@@ -15,28 +16,81 @@
     };
   };
 
-  outputs = {
+  outputs = inputs @ {
     nixpkgs,
     home-manager,
     ...
-  } @ inputs: let
-    g = import ./globals.nix;
-  in {
-    nixosConfigurations.${g.username} = nixpkgs.lib.nixosSystem {
-      system = "x86-64-linux";
-      specialArgs = {inherit inputs;};
-      modules = [
-        ./hosts/configuration.nix
-        home-manager.nixosModules.home-manager
-        {
-          home-manager = {
-            useGlobalPkgs = true;
-            useUserPackages = true;
-            users.${g.username} = import ./hosts/home.nix;
-            backupFileExtension = "backup";
-          };
-        }
-      ];
+  }: let
+    # ------------------------------------
+    # Global user
+    # ------------------------------------
+    user = {
+      name = "heisenkebab";
+      homeDir = "/home/heisenkebab";
     };
+
+    # ------------------------------------
+    # Hosts
+    # ------------------------------------
+    hosts = [
+      {
+        name = "nixos";
+        system = {
+          os = "linux";
+          desktop = "wayland";
+        };
+        monitors = [
+          {
+            name = "HDMI-A-1";
+            dimensions = "1920x1080";
+            scale = 1;
+            primary = true;
+            internal = true;
+            framerate = 60;
+            transform = 0;
+          }
+        ];
+      }
+    ];
+
+    # ------------------------------------
+    # build each host
+    # ------------------------------------
+    forLinuxHosts = host: {
+      name = host.name;
+      value = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        specialArgs = {
+          inherit inputs;
+          meta = {
+            hostname = host.name;
+            system = host.system;
+            monitors = host.monitors;
+          };
+          user = user;
+        };
+
+        modules = [
+          ./hosts/configuration.nix
+
+          home-manager.nixosModules.home-manager
+          {
+            home-manager = {
+              useGlobalPkgs = true;
+              useUserPackages = true;
+              backupFileExtension = "backup";
+              users.${user.name} = import ./hosts/home.nix;
+              extraSpecialArgs = {
+                inherit inputs;
+                meta = host;
+                user = user;
+              };
+            };
+          }
+        ];
+      };
+    };
+  in {
+    nixosConfigurations = builtins.listToAttrs (map forLinuxHosts hosts);
   };
 }

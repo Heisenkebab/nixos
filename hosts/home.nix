@@ -1,11 +1,13 @@
-{pkgs, ...}: let
-  g = import ../globals.nix;
-in {
+{
+  pkgs,
+  user,
+  ...
+}: {
   imports = [
     ../home
   ];
-  home.username = g.username;
-  home.homeDirectory = "/home/${g.username}";
+  home.username = user.name;
+  home.homeDirectory = user.homeDir;
   home.stateVersion = "25.05";
 
   programs.git.enable = true;

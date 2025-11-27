@@ -1,10 +1,9 @@
 {
   inputs,
   pkgs,
+  user,
   ...
-}: let
-  g = import ../globals.nix;
-in {
+}: {
   imports = [
     inputs.home-manager.nixosModules.default
 
@@ -20,7 +19,7 @@ in {
 
   time.timeZone = "Europe/Vienna";
 
-  users.users.${g.username} = {
+  users.users.${user.name} = {
     isNormalUser = true;
     extraGroups = [
       "wheel"

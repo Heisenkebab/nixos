@@ -1,8 +1,8 @@
 # <https://wiki.nixos.org/wiki/Networking>
-_: {
+{meta, ...}: {
   networking = {
     useDHCP = false;
-    hostName = "sell";
+    hostName = meta.hostname;
 
     # Issue with DNS resolution (/etc/resolv.conf)
     resolvconf.dnsExtensionMechanism = false;
