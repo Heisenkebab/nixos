@@ -13,7 +13,7 @@ _: {
 
       monitor = [
         "eDP-2, 1920x1200@165.01, 0x0, 1"
-        "HDMI-A-1, 1280x800@59.81000, 1920x0, 1"
+        "HDMI-A-1, 1920x1080@60, 1920x0, 1"
       ];
 
       # ENVIRONMENT VARIABLES
@@ -30,7 +30,7 @@ _: {
           natural_scroll = true;
         };
 
-        kb_layout = "de, us";
+        kb_layout = "de";
         kb_options = [
           "grp:alt_shift_toggle"
           "caps:escape"
@@ -116,7 +116,6 @@ _: {
         "$mainMod, C, killactive"
 
         # Window Management
-        "$mainMod, P, pseudo"
         "$mainMod SHIFT, I, togglesplit"
         "$mainMod, M, fullscreen, 1"
         "$mainMod SHIFT, M, fullscreen, 0"
@@ -171,6 +170,11 @@ _: {
         # Other
         "$mainMod, ENTER, togglespecialworkspace"
         "$mainMod SHIFT, ENTER, movetoworkspace,special"
+
+        #Mirror
+        "$mainMod, P, exec, hyprctl keyword monitor HDMI-A-1, 1920x1080@60, 1920x0, 1, mirror, eDP-2"
+        # Extend
+        "$mainMod SHIFT, P, exec, hyprctl keyword monitor HDMI-A-1, 1920x1080@60,1920x0,1"
       ];
 
       bindm = [
