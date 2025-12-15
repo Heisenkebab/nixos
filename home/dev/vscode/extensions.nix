@@ -12,6 +12,23 @@
       eamodio.gitlens
       bradlc.vscode-tailwindcss
       prisma.prisma
+      quicktype.quicktype
+      (pkgs.vscode-utils.buildVscodeMarketplaceExtension {
+        mktplcRef = {
+          name = "vscode-containers";
+          publisher = "ms-azuretools";
+          version = "2.3.0";
+          hash = "sha256-zrEZpd2geX2G4u6LkIk3d6C7vhwZZ4lwHGQR3Z0OWY4=";
+        };
+      })
+      (pkgs.vscode-utils.buildVscodeMarketplaceExtension {
+        mktplcRef = {
+          name = "simple-react-snippets";
+          publisher = "burkeholland";
+          version = "1.2.8";
+          hash = "sha256-zrRxJZHRqBMGVkd56Q+wDbCSFfl4X3Kta4sX8ecZmu8=";
+        };
+      })
       (pkgs.vscode-utils.buildVscodeMarketplaceExtension {
         mktplcRef = {
           name = "material-icon-theme";

@@ -7,6 +7,7 @@
       "workbench.colorTheme" = "One Dark Pro Night Flat";
       "editor.cursorBlinking" = "expand";
       "workbench.iconTheme" = "material-icon-theme";
+      "editor.wordWrap" = "on";
     };
   };
 }
