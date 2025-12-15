@@ -14,11 +14,21 @@
       url = "github:hyprwm/hyprland-plugins";
       inputs.hyprland.follows = "hyprland";
     };
+
+    disko.url = "github:nix-community/disko";
+    disko.inputs.nixpkgs.follows = "nixpkgs";
+
+    spicetify-nix = {
+      url = "github:Gerg-L/spicetify-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = inputs @ {
     nixpkgs,
     home-manager,
+    disko,
+    spicetify-nix,
     ...
   }: let
     # ------------------------------------
@@ -62,6 +72,7 @@
         system = "x86_64-linux";
         specialArgs = {
           inherit inputs;
+
           meta = {
             hostname = host.name;
             system = host.system;
@@ -72,7 +83,7 @@
 
         modules = [
           ./hosts/configuration.nix
-
+          disko.nixosModules.disko
           home-manager.nixosModules.home-manager
           {
             home-manager = {
@@ -82,6 +93,7 @@
               users.${user.name} = import ./hosts/home.nix;
               extraSpecialArgs = {
                 inherit inputs;
+                inherit spicetify-nix;
                 meta = host;
                 user = user;
               };

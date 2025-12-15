@@ -7,11 +7,6 @@
     ghostty
     nautilus
     vscode-with-extensions
-
-    #Spotify
-    spotify
-    spicetify-cli
-
     # waybar
     waybar
 
@@ -25,7 +20,7 @@
 
     # Util
     blueman
-
+    neofetch
     google-chrome
   ];
 }
