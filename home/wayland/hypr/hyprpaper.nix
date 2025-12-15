@@ -1,5 +1,5 @@
 _: {
   home.file.".config/hypr/hyprpaper.conf".text = ''
-    preload = ${../../../wallpapers/nixos.png}
-    wallpaper = , ${../../../wallpapers/nixos.png} '';
+    preload = ${../../../wallpapers/wallhaven-blonde.png}
+    wallpaper = , ${../../../wallpapers/wallhaven-blonde.png} '';
 }
