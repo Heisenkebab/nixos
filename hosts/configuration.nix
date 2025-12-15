@@ -14,7 +14,7 @@
 
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
-  boot.blacklistedKernelModules = ["kvm" "kvm_intel"];
+  boot.blacklistedKernelModules = ["kvm" "kvm_intel" "kvm_amd"];
   boot.kernelPackages = pkgs.linuxPackages_latest;
 
   time.timeZone = "Europe/Vienna";
@@ -26,7 +26,6 @@
       "input"
       "vboxusers"
       "docker"
-      "kvm"
     ];
   };
 
