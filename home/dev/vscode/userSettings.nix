@@ -1,6 +1,6 @@
 {pkgs, ...}: {
   programs.vscode = {
-    userSettings = {
+    profiles.default.userSettings = {
       "files.autoSave" = "onFocusChange";
       "editor.formatOnSave" = true;
       "workbench.sideBar.location" = "right";
