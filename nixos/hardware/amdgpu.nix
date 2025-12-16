@@ -12,4 +12,5 @@
     ];
   };
   boot.kernelModules = ["amdgpu"];
+  boot.kernelParams = ["amdgpu.dc=1"];
 }
