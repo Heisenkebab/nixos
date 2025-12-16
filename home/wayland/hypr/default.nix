@@ -108,6 +108,7 @@ _: {
       "$mainMod" = "SUPER";
 
       bind = [
+        "$mainMod, R, exec, hyprctl reload"
         # Launch Applications
         "$mainMod, SPACE, exec,  wofi --show drun -I -m -i"
         "$mainMod SHIFT, N, exec, swaync-client -rs"
@@ -185,6 +186,7 @@ _: {
       windowrulev2 = [
         "suppressevent maximize, class:.*"
         "opacity 0.9, class:Code"
+        "opacity 0.9, class:jetbrains-idea"
         "workspace 2, class:Brave-browser"
         "workspace 1, class:ghostty"
       ];
