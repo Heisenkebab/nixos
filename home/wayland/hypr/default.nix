@@ -1,4 +1,8 @@
-_: {
+{
+  meta,
+  pkgs,
+  ...
+}: {
   imports = [
     ./hyprpaper.nix
     ./hypridle.nix
@@ -11,10 +15,11 @@ _: {
     settings = {
       "$fileManager" = "nautilus";
 
-      monitor = [
-        "eDP-2, 1920x1200@165.01, 0x0, 1"
-        "HDMI-A-1, 1920x1080@60, 1920x0, 1"
-      ];
+      monitor =
+        map (
+          m: "${m.name}, ${m.dimensions}@${toString m.framerate}, ${m.position}, ${toString m.scale}"
+        )
+        meta.monitors;
 
       # ENVIRONMENT VARIABLES
       env = [

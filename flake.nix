@@ -46,7 +46,34 @@
     # ------------------------------------
     hosts = [
       {
-        name = "nixos";
+        name = "laptop";
+        system = {
+          os = "linux";
+          desktop = "wayland";
+        };
+        monitors = [
+          {
+            name = "eDP-1";
+            dimensions = "1920x1200";
+            scale = 1;
+            primary = true;
+            framerate = 165;
+            position = "0x0";
+            transform = 0;
+          }
+          {
+            name = "HDMI-A-1";
+            dimensions = "1920x1080";
+            scale = 1;
+            primary = false;
+            framerate = 60;
+            position = "1920x0";
+            transform = 0;
+          }
+        ];
+      }
+      {
+        name = "pc";
         system = {
           os = "linux";
           desktop = "wayland";
@@ -56,9 +83,18 @@
             name = "HDMI-A-1";
             dimensions = "1920x1080";
             scale = 1;
+            primary = false;
+            framerate = 144;
+            position = "1920x0";
+            transform = 0;
+          }
+          {
+            name = "DP-1";
+            dimensions = "1920x1080";
+            scale = 1;
             primary = true;
-            internal = true;
-            framerate = 60;
+            framerate = 144;
+            position = "0x0";
             transform = 0;
           }
         ];

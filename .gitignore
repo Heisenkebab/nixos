@@ -1,2 +1,3 @@
 .sass-cache
 .direnv
+hosts/hardware-configuration.nix
