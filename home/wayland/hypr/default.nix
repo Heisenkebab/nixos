@@ -201,6 +201,7 @@
         "move, 2, class:Brave-browser"
         "move, 1, class:ghostty"
       ];
+      workspace = meta.workspaceRules;
     };
 
     extraConfig = ''

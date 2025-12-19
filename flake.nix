@@ -98,6 +98,17 @@
             transform = 0;
           }
         ];
+        workspaceRules = [
+          "1, monitor:DP-1"
+          "2, monitor:HDMI-A-1"
+          "3, monitor:DP-1"
+          "4, monitor:HDMI-A-1"
+          "5, monitor:DP-1"
+          "6, monitor:DP-1"
+          "7, monitor:DP-1"
+          "8, monitor:DP-1"
+          "9, monitor:DP-1"
+        ];
       }
     ];
 
@@ -115,6 +126,7 @@
             hostname = host.name;
             system = host.system;
             monitors = host.monitors;
+            workspaceRules = host.workspaceRules;
           };
           user = user;
         };
