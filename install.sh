@@ -1,5 +1,5 @@
 #!/bin/sh
-
+set -e
 printf "Did you change the disk in disko.nix? (y/N): "
 read -r disk_changed
 if [ "${disk_changed:-n}" != "y" ] && [ "${disk_changed:-n}" != "Y" ]; then
@@ -27,11 +27,11 @@ while true; do
     esac
 done
 
-sudo nix --experimental-features "nix-command flakes" run github:nix-community/disko/latest -- --mode destroy,format,mount /root/nixos/nixos/hardware/disko.nix && \
+sudo nix --experimental-features "nix-command flakes" run github:nix-community/disko/latest -- --mode destroy,format,mount ~/nixos/nixos/hardware/disko.nix && \
 sudo nixos-generate-config --no-filesystems --root /mnt && \
-sudo cp /mnt/etc/nixos/hardware-configuration.nix /root/nixos/hosts/ && \
+sudo cp /mnt/etc/nixos/hardware-configuration.nix ~/nixos/hosts/ && \
 sudo rm -rf /mnt/etc/nixos/configuration.nix && \
-sudo mv /root/nixos /mnt/etc/nixos && \
+sudo mv ~/nixos/* /mnt/etc/nixos && \
 sudo nixos-install --flake /mnt/etc/nixos#nixos
 
 echo "-----------------------------------------------------------"
