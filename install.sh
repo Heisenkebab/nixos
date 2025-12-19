@@ -36,5 +36,5 @@ sudo nixos-install --flake /mnt/etc/nixos#nixos
 
 echo "-----------------------------------------------------------"
 echo "INSTALLATION COMPLETE"
-echo "BEFORE REBOOTING: sudo nixos-enter --root /mnt -c 'passwd heisenkebab'"
+echo "BEFORE REBOOTING: sudo nixos-enter --root /mnt -c 'passwd username'"
 echo "-----------------------------------------------------------"
