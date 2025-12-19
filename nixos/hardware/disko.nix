@@ -2,6 +2,8 @@ _: {
   disko.devices = {
     disk = {
       nixos = {
+        # Change "/dev/nvme0n1" to your target disk.
+        # You can find the correct identifier by running: lsblk
         device = "/dev/nvme0n1";
         type = "disk";
         content = {
