@@ -17,13 +17,13 @@ Before running the script, you must verify your hardware settings.
 ### A. Target the Correct Disk
 Check your drive names using lsblk. Then, edit the disko.nix file to match your target drive (e.g., /dev/sda or /dev/nvme0n1):
 ```bash
-vim /root/nixos/nixos/hardware/disko.nix
+vim ~/nixos/nixos/hardware/disko.nix
 ```
 
 ### B. Set Your Username
 If you want to use a name other than heisenkebab, you must update it in your flake.nix:
 ```bash
-vim /root/nixos/flake.nix
+vim ~/nixos/flake.nix
 ```
 
 ### C. Run the Install Script

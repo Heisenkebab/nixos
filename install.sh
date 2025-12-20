@@ -3,14 +3,14 @@ set -e
 printf "Did you change the disk in disko.nix? (y/N): "
 read -r disk_changed
 if [ "${disk_changed:-n}" != "y" ] && [ "${disk_changed:-n}" != "Y" ]; then
-    echo "Go to /root/nixos/nixos/hardware/disko.nix and change the disk if needed."
+    echo "Go to ~/nixos/nixos/hardware/disko.nix and change the disk if needed."
     exit 0
 fi
 
 printf "Default user is 'heisenkebab'. Proceed? (y/N): "
 read -r user_ok
 if [ "${user_ok:-n}" != "y" ] && [ "${user_ok:-n}" != "Y" ]; then
-    echo "Go to /root/nixos/flake.nix and change the user.name."
+    echo "Go to ~/nixos/flake.nix and change the user.name."
     exit 0
 fi
 
