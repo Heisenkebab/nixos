@@ -1,8 +1,4 @@
-{
-  meta,
-  pkgs,
-  ...
-}: {
+{meta, ...}: {
   imports = [
     ./hyprpaper.nix
     ./hypridle.nix
@@ -178,7 +174,7 @@
         "$mainMod SHIFT, ENTER, movetoworkspace,special"
 
         #Mirror
-        "$mainMod, P, exec, hyprctl keyword monitor HDMI-A-1, 1920x1080@60, 1920x0, 1, mirror, eDP-2"
+        "$mainMod, P, exec, hyprctl keyword monitor HDMI-A-1, 1920x1080@60, 1920x0, 1, mirror, eDP-1"
         # Extend
         "$mainMod SHIFT, P, exec, hyprctl keyword monitor HDMI-A-1, 1920x1080@60,1920x0,1"
       ];
