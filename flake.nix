@@ -47,6 +47,7 @@
     hosts = [
       {
         name = "laptop";
+        isLaptop = true;
         system = {
           os = "linux";
           desktop = "wayland";
@@ -71,9 +72,11 @@
             transform = 0;
           }
         ];
+        workspaceRules = [];
       }
       {
         name = "pc";
+        isLaptop = false;
         system = {
           os = "linux";
           desktop = "wayland";
