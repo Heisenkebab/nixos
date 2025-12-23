@@ -14,16 +14,26 @@
     TTYVTDisallocate = true;
   };
   systemd.services.onedriveResync = {
-    serviceConfig.Type = "oneshot";
+    description = "Onedrive Sync Service";
+    serviceConfig = {
+      Type = "oneshot";
+      # It is often better to run this as your user rather than root
+      # User = "yourusername";
+    };
     script = ''
-      onedrive --sync
+      ${pkgs.onedrive}/bin/onedrive --sync
     '';
-    # Specify required packages in the path
-    path = [pkgs.bash];
+    # Ensure the binary is available to the service
+    path = [pkgs.onedrive];
   };
+
   systemd.timers.onedriveResyncTimer = {
+    description = "Run onedrive sync every hour";
     wantedBy = ["timers.target"];
-    timerConfig.OnCalendar = "hourly";
-    partOf = ["onedriveResync.service"];
+    timerConfig = {
+      OnCalendar = "hourly";
+      Persistent = true; # Runs the job immediately if the computer was off during the last scheduled time
+      Unit = "onedriveResync.service";
+    };
   };
 }

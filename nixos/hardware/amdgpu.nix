@@ -24,7 +24,5 @@
   services.supergfxd.enable = meta.isLaptop;
 
   boot.kernelModules = ["amdgpu"];
-  boot.kernelParams =
-    ["amdgpu.dc=1"]
-    ++ lib.optionals meta.isLaptop ["video=HDMI-A-1:e"];
+  boot.kernelParams = ["amdgpu.dc=1"];
 }
