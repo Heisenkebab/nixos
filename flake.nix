@@ -130,6 +130,7 @@
             system = host.system;
             monitors = host.monitors;
             workspaceRules = host.workspaceRules;
+            isLaptop = host.isLaptop;
           };
           user = user;
         };
