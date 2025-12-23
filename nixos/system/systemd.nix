@@ -17,8 +17,7 @@
     description = "Onedrive Sync Service";
     serviceConfig = {
       Type = "oneshot";
-      # It is often better to run this as your user rather than root
-      # User = "yourusername";
+      User = "heisenkebab";
     };
     script = ''
       ${pkgs.onedrive}/bin/onedrive --sync
