@@ -1,7 +1,7 @@
 _: {
   home.file.".config/hypr/hyprlock.conf".text = ''
     background {
-        path = ${toString ../../../wallpapers/wallhaven-dune.png}
+        path = ${toString ../../../wallpapers/wallhaven-black.png}
         blur_passes = 3
         contrast = 0.8916
         brightness = 0.8172
