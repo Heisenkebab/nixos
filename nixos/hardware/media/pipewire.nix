@@ -7,12 +7,9 @@ _: {
     enable = true;
     pulse.enable = true;
     wireplumber.enable = true;
-
     alsa = {
       enable = true;
-      support32Bit = false;
     };
-
     extraConfig.pipewire."92-low-latency" = {
       "context.properties" = {
         "default.clock.rate" = 48000;
