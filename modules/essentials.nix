@@ -5,5 +5,6 @@
     wl-clipboard-rs
     bibata-cursors
     openssl_3
+    imv
   ];
 }
