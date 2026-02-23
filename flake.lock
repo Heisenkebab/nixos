@@ -40,11 +40,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1769524058,
-        "narHash": "sha256-zygdD6X1PcVNR2PsyK4ptzrVEiAdbMqLos7utrMDEWE=",
+        "lastModified": 1771469470,
+        "narHash": "sha256-GnqdqhrguKNN3HtVfl6z+zbV9R9jhHFm3Z8nu7R6ml0=",
         "owner": "nix-community",
         "repo": "disko",
-        "rev": "71a3fc97d80881e91710fe721f1158d3b96ae14d",
+        "rev": "4707eec8d1d2db5182ea06ed48c820a86a42dc13",
         "type": "github"
       },
       "original": {
@@ -203,11 +203,11 @@
         "xdph": "xdph"
       },
       "locked": {
-        "lastModified": 1771177803,
-        "narHash": "sha256-7HNX0Dy6liSZo8H/Od3JTPIH2gs+yuXKvf5kIkgJqI8=",
+        "lastModified": 1771803010,
+        "narHash": "sha256-LL9+zk04V1kgJFUCb5LntzgJ2XsZRzgR9zokbRZY/JI=",
         "ref": "refs/heads/main",
-        "rev": "6716b8a0e32b1adf68cd158ea38acec73f3fc22e",
-        "revCount": 6893,
+        "rev": "b88813c7efa4b7b0c5fe01471c5fa5b67a61dc7e",
+        "revCount": 6914,
         "submodules": true,
         "type": "git",
         "url": "https://github.com/hyprwm/Hyprland"
@@ -486,11 +486,11 @@
         "systems": "systems_2"
       },
       "locked": {
-        "lastModified": 1771066195,
-        "narHash": "sha256-Gp0Y18KDirF4rlvJa4B4Gw3YpwOa3X+lOoanJNTkcMM=",
+        "lastModified": 1771678588,
+        "narHash": "sha256-PUPhmsfEO/KnvCIIpEq6Mhyv0R9ht8giPssz7SO4rzU=",
         "owner": "nix-community",
         "repo": "nix-jetbrains-plugins",
-        "rev": "ca725b8d62e618e040a478262ac312019ba63303",
+        "rev": "ae1b64623441e20b748585aee80fd3594052bc5b",
         "type": "github"
       },
       "original": {
@@ -504,11 +504,11 @@
         "nixpkgs": "nixpkgs_3"
       },
       "locked": {
-        "lastModified": 1770023640,
-        "narHash": "sha256-IC9fPCRvDoIHs+ErVGTWzDytZ9anm3QgPI/fNx8DpzQ=",
+        "lastModified": 1771232085,
+        "narHash": "sha256-eznGLYfxj/lhJIQWyz3TdEJhyGXzJoub0EamKacLOH0=",
         "owner": "Mic92",
         "repo": "nix-ld",
-        "rev": "d68325dfe03c3dfe3e2627062b39e1d4fc3dab1f",
+        "rev": "25e84aaf955031b7573b6e6efecf64b0f4b27f8a",
         "type": "github"
       },
       "original": {
@@ -623,11 +623,11 @@
         "systems": "systems_3"
       },
       "locked": {
-        "lastModified": 1771209550,
-        "narHash": "sha256-svwIVz6OENbSEHFgDRWqgQiCGqq5sHB9epQOaaBu+EE=",
+        "lastModified": 1771737804,
+        "narHash": "sha256-7wn9qbzIQQgH8tnq4VwzuWEqEWpekuymlLyhY3vM/j8=",
         "owner": "Gerg-L",
         "repo": "spicetify-nix",
-        "rev": "97bcf7010237914b84c71f58f1714f40421ba30b",
+        "rev": "6dd43010ac2458cc56a6ac5250349b9217a7a2ae",
         "type": "github"
       },
       "original": {
