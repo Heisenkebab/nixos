@@ -14,6 +14,7 @@
       vulkan-tools
     ];
   };
+
   environment.systemPackages = with pkgs;
     []
     ++ lib.optionals meta.isLaptop [

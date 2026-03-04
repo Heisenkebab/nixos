@@ -16,6 +16,7 @@
   boot.loader.efi.canTouchEfiVariables = true;
   boot.blacklistedKernelModules = ["kvm" "kvm_intel" "kvm_amd"];
   boot.kernelPackages = pkgs.linuxPackages_latest;
+  hardware.enableRedistributableFirmware = true;
 
   time.timeZone = "Europe/Vienna";
 
@@ -35,6 +36,12 @@
     package = inputs.hyprland.packages."${pkgs.system}".hyprland;
   };
 
+  xdg.portal = {
+    enable = true;
+    extraPortals = [pkgs.xdg-desktop-portal-gtk];
+    config.common.default = "*";
+  };
+
   services.greetd = {
     enable = true;
     vt = 1;
@@ -44,6 +51,12 @@
         user = "greeter";
       };
     };
+  };
+  services.logind = {
+    lidSwitch = "ignore";
+    lidSwitchExternalPower = "ignore";
+    powerKey = "ignore";
+    powerKeyLongPress = "ignore";
   };
 
   system.stateVersion = "25.05";
