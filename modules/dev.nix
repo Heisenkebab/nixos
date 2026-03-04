@@ -18,6 +18,7 @@
     gnupg
     direnv
     git
+    gh
     zoxide
     bat
     neofetch
