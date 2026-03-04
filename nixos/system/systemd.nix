@@ -15,6 +15,8 @@
   };
   systemd.services.onedriveResync = {
     description = "Onedrive Sync Service";
+    after = ["network-online.target"];
+    wants = ["network-online.target"];
     serviceConfig = {
       Type = "oneshot";
       User = "heisenkebab";
