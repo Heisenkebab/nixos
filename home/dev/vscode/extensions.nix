@@ -13,6 +13,23 @@
       bradlc.vscode-tailwindcss
       prisma.prisma
       quicktype.quicktype
+      github.copilot-chat
+      (pkgs.vscode-utils.buildVscodeMarketplaceExtension {
+        mktplcRef = {
+          name = "sqltools-driver-pg";
+          publisher = "mtxr";
+          version = "0.5.7";
+          hash = "sha256-fbQsKnkBz11ZTZ2v7Y9bQ9GHPjactUoB98LeNRKeOkY=";
+        };
+      })
+      (pkgs.vscode-utils.buildVscodeMarketplaceExtension {
+        mktplcRef = {
+          name = "sqltools";
+          publisher = "mtxr";
+          version = "0.28.5";
+          hash = "sha256-2JgBRMaNU3einOZ0POfcc887HCScu6myETTLoJMS6o8=";
+        };
+      })
       (pkgs.vscode-utils.buildVscodeMarketplaceExtension {
         mktplcRef = {
           name = "vscode-containers";
