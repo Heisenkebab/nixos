@@ -1,7 +1,7 @@
 {
   description = "NixOS basic flake";
   inputs = {
-    nixpkgs.url = "nixpkgs/nixos-25.05";
+    nixpkgs.url = "nixpkgs/nixos-25.11";
     nix-ld.url = "github:Mic92/nix-ld";
 
     home-manager = {

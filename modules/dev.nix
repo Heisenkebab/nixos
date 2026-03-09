@@ -26,8 +26,6 @@
     ffmpeg
     sass
     gdb
-    jdk24
-
     # tui
     typioca
     binsider
@@ -44,6 +42,6 @@
     # gui
     jetbrains.datagrip
     jetbrains.rider
-    jetbrains.idea-ultimate
+    jetbrains.idea
   ];
 }

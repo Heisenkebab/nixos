@@ -10,7 +10,6 @@
     extraPackages = with pkgs; [
       mesa
       vulkan-loader
-      amdvlk
       vulkan-tools
     ];
   };
@@ -19,6 +18,8 @@
     []
     ++ lib.optionals meta.isLaptop [
       brightnessctl
+      rocm-opencl-runtime
+      ocl-icd
       lact
       supergfxctl
     ];

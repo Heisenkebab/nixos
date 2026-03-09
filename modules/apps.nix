@@ -3,7 +3,6 @@
     vesktop
     discord
     onlyoffice-desktopeditors
-    brave
     ghostty
     nautilus
     vscode-with-extensions
@@ -22,5 +21,6 @@
     blueman
     neofetch
     google-chrome
+    prismlauncher
   ];
 }

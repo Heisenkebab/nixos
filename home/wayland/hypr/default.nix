@@ -91,10 +91,9 @@
         disable_hyprland_logo = false;
       };
 
-      gestures = {
-        workspace_swipe = true;
-      };
-
+      gesture = [
+        "3, horizontal, workspace"
+      ];
       # AUTOSTART
       exec-once = [
         "systemctl --user start hyprland-session.target"
@@ -184,18 +183,13 @@
         "$mainMod, mouse:273, resizewindow"
       ];
 
-      windowrulev2 = [
-        "suppressevent maximize, class:.*"
-        "opacity 0.9, class:Code"
-        "opacity 0.9, class:jetbrains-idea"
-        "workspace 2, class:Brave-browser"
-        "workspace 1, class:ghostty"
-      ];
-
       windowrule = [
-        "float,class:.waypaper-wrapped"
-        "move, 2, class:Brave-browser"
-        "move, 1, class:ghostty"
+        "suppressevent maximize, class:.*"
+        "opacity 0.9, class:code"
+
+        "opacity 0.9, class:jetbrains-idea"
+        "move, workspace 2, class:Brave-browser"
+        "move, workspace 1, class:ghostty"
       ];
       workspace = meta.workspaceRules;
     };

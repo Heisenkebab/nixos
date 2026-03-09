@@ -33,7 +33,7 @@
   programs.hyprland = {
     enable = true;
     xwayland.enable = true;
-    package = inputs.hyprland.packages."${pkgs.system}".hyprland;
+    package = inputs.hyprland.packages."${pkgs.stdenv.hostPlatform.system}".hyprland;
   };
 
   xdg.portal = {
@@ -44,19 +44,17 @@
 
   services.greetd = {
     enable = true;
-    vt = 1;
     settings = {
       default_session = {
-        command = "${pkgs.greetd.tuigreet}/bin/tuigreet --time --remember --cmd Hyprland";
+        command = "${pkgs.tuigreet}/bin/tuigreet --time --remember --cmd Hyprland";
+
         user = "greeter";
       };
     };
   };
-  services.logind = {
-    lidSwitch = "ignore";
-    lidSwitchExternalPower = "ignore";
-    powerKey = "ignore";
-    powerKeyLongPress = "ignore";
+  services.logind.settings.Login = {
+    HandlePowerKey = "ignore";
+    # powerKeyLongPress = "ignore";
   };
 
   system.stateVersion = "25.05";
