@@ -18,7 +18,6 @@
     []
     ++ lib.optionals meta.isLaptop [
       brightnessctl
-      rocm-opencl-runtime
       ocl-icd
       lact
       supergfxctl
