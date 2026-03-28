@@ -60,9 +60,12 @@
         # "col.shadow" = "rgba(1a1a1aee)";
         blur = {
           enabled = true;
-          size = 3;
-          passes = 1;
-          vibrancy = 0.1696;
+          size = 6;
+          passes = 2;
+          brightness = 1.0;
+          contrast = 1.0;
+          popups = true; # blur popup menus
+          noise = 0.03;
         };
       };
 
@@ -188,6 +191,7 @@
         "opacity 0.9, class:code"
 
         "opacity 0.9, class:jetbrains-idea"
+        "opacity 0.9, class:com.mitchellh.ghostty"
         "move, workspace 2, class:Brave-browser"
         "move, workspace 1, class:ghostty"
       ];
