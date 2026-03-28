@@ -21,8 +21,8 @@
     gh
     zoxide
     bat
-    neofetch
     delta
+    fastfetch
     ffmpeg
     sass
     gdb

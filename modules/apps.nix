@@ -19,7 +19,6 @@
 
     # Util
     blueman
-    neofetch
     google-chrome
     prismlauncher
   ];
