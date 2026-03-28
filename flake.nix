@@ -23,6 +23,10 @@
       url = "github:Gerg-L/spicetify-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    nix-darwin = {
+      url = "github:lnl7/nix-darwin/master";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     nix-jetbrains-plugins.url = "github:nix-community/nix-jetbrains-plugins";
   };
 
@@ -31,6 +35,7 @@
     home-manager,
     disko,
     spicetify-nix,
+    nix-darwin,
     ...
   }: let
     # ------------------------------------
@@ -51,6 +56,8 @@
         system = {
           os = "linux";
           desktop = "wayland";
+          dGpu = "AMD";
+          iGpu = "AMD";
         };
         monitors = [
           {
@@ -80,6 +87,8 @@
         system = {
           os = "linux";
           desktop = "wayland";
+          dGpu = "AMD";
+          iGpu = "AMD";
         };
         monitors = [
           {
@@ -113,6 +122,37 @@
           "9, monitor:DP-1"
         ];
       }
+      {
+        name = "macBook";
+        isLaptop = true;
+        system = {
+          os = "darwin";
+          desktop = "wayland";
+          dGpu = "NONE";
+          iGpu = "APPLE";
+        };
+        monitors = [
+          {
+            name = "eDP-1";
+            dimensions = "1920x1200";
+            scale = 1;
+            primary = true;
+            framerate = 165;
+            position = "0x0";
+            transform = 0;
+          }
+          {
+            name = "HDMI-A-1";
+            dimensions = "1920x1080";
+            scale = 1;
+            primary = false;
+            framerate = 60;
+            position = "1920x0";
+            transform = 0;
+          }
+        ];
+        workspaceRules = [];
+      }
     ];
 
     # ------------------------------------
@@ -128,15 +168,15 @@
           meta = {
             hostname = host.name;
             system = host.system;
+            isLaptop = host.isLaptop;
             monitors = host.monitors;
             workspaceRules = host.workspaceRules;
-            isLaptop = host.isLaptop;
           };
           user = user;
         };
 
         modules = [
-          ./hosts/configuration.nix
+          ./hosts/linux/configuration.nix
           disko.nixosModules.disko
           home-manager.nixosModules.home-manager
           {
@@ -144,7 +184,7 @@
               useGlobalPkgs = true;
               useUserPackages = true;
               backupFileExtension = "backup";
-              users.${user.name} = import ./hosts/home.nix;
+              users.${user.name} = import ./hosts/linux/home.nix;
               extraSpecialArgs = {
                 inherit inputs;
                 inherit spicetify-nix;
@@ -156,7 +196,52 @@
         ];
       };
     };
+
+    forDarwinHosts = host: {
+      name = host.name;
+      value = nix-darwin.lib.darwinSystem {
+        system = "aarch64-darwin";
+        specialArgs = {
+          inherit inputs;
+
+          meta = {
+            hostname = host.name;
+            system = host.system;
+            isLaptop = host.isLaptop;
+            monitors = host.monitors;
+            workspaceRules = host.workspaceRules;
+          };
+          user = user;
+        };
+
+        modules = [
+          ./hosts/darwin/configuration.nix
+
+          home-manager.darwinModules.home-manager
+          {
+            home-manager = {
+              useGlobalPkgs = true;
+              useUserPackages = true;
+              backupFileExtension = "backup";
+              users.${user.name} = import ./hosts/darwin/home.nix;
+              extraSpecialArgs = {
+                inherit inputs;
+                inherit spicetify-nix;
+                meta = host;
+                user = user;
+              };
+            };
+          }
+        ];
+      };
+    };
+
+    linuxHosts = builtins.filter (h: h.system.os == "linux") hosts;
+    #darwinHosts = builtins.filter (h: h.system.os == "darwin") hosts;
   in {
-    nixosConfigurations = builtins.listToAttrs (map forLinuxHosts hosts);
+    nixosConfigurations = builtins.listToAttrs (map forLinuxHosts linuxHosts);
+
+    #darwinConfigurations =
+    #  builtins.listToAttrs (map forDarwinHosts darwinHosts);
   };
 }

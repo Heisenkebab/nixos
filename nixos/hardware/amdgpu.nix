@@ -22,8 +22,9 @@
       lact
       supergfxctl
     ];
-  services.supergfxd.enable = meta.isLaptop;
+  services.supergfxd.enable =
+    meta.system.iGpu == "AMD" && meta.system.dGpu == "AMD" && meta.isLaptop;
 
-  boot.kernelModules = ["amdgpu"];
-  boot.kernelParams = ["amdgpu.dc=1"];
+  boot.kernelModules = lib.optional (meta.system.dGpu == "AMD") "amdgpu";
+  boot.kernelParams = lib.optional (meta.system.dGpu == "AMD") "amdgpu.dc=1";
 }
