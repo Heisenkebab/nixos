@@ -5,11 +5,12 @@
   ...
 }: {
   imports = [
-    inputs.home-manager.nixosModules.default
+    inputs.home-manager.darwinModules.default
 
     ./hardware-configuration.nix
-    ../nixos
-    ../modules
+
+    ../../nixos
+    ../../modules
   ];
 
   boot.loader.systemd-boot.enable = true;
@@ -54,8 +55,7 @@
   };
   services.logind.settings.Login = {
     HandlePowerKey = "ignore";
-    # powerKeyLongPress = "ignore";
   };
 
-  system.stateVersion = "25.05";
+  system.stateVersion = "25.11";
 }
