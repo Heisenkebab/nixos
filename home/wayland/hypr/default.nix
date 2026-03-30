@@ -187,13 +187,14 @@
       ];
 
       windowrule = [
-        "suppressevent maximize, class:.*"
-        "opacity 0.9, class:code"
+        "match:class .*, suppress_event maximize"
 
-        "opacity 0.9, class:jetbrains-idea"
-        "opacity 0.9, class:com.mitchellh.ghostty"
-        "move, workspace 2, class:Brave-browser"
-        "move, workspace 1, class:ghostty"
+        "match:class code, opacity 0.9"
+        "match:class jetbrains-idea, opacity 0.9"
+        "match:class com.mitchellh.gosttty, opacity 0.9"
+
+        "match:class Brave-browser, move workspace 2"
+        "match:class ghostty, move workspace 1"
       ];
       workspace = meta.workspaceRules;
     };
