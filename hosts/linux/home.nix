@@ -4,7 +4,8 @@
   ...
 }: {
   imports = [
-    ../../home
+    ../../home/linux
+    ../../home/shared
   ];
   home.username = user.name;
   home.homeDirectory = user.homeDir;

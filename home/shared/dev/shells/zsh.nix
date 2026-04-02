@@ -54,7 +54,7 @@
 
       setopt HIST_EXPIRE_DUPS_FIRST    # Expire duplicate entries first when trimming history.
       eval "$(starship init zsh)"
-      neofetch
+      fastfetch
     '';
 
     plugins = [

@@ -1,10 +1,9 @@
 _: {
   imports = [
-    ./dev.nix
     ./apps.nix
-    ./languages.nix
+    ./dev.nix
     ./essentials.nix
-    ./security.nix
+    ./languages.nix
     ./security.nix
   ];
 }

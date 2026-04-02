@@ -5,7 +5,7 @@
     nix-ld.url = "github:Mic92/nix-ld";
 
     home-manager = {
-      url = "github:nix-community/home-manager/release-25.05";
+      url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -27,6 +27,7 @@
       url = "github:lnl7/nix-darwin/master";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    nix-homebrew.url = "github:zhaofengli/nix-homebrew";
     nix-jetbrains-plugins.url = "github:nix-community/nix-jetbrains-plugins";
   };
 
@@ -36,6 +37,7 @@
     disko,
     spicetify-nix,
     nix-darwin,
+    nix-homebrew,
     ...
   }: let
     # ------------------------------------
@@ -43,7 +45,10 @@
     # ------------------------------------
     user = {
       name = "heisenkebab";
-      homeDir = "/home/heisenkebab";
+      homeDir =
+        if nixpkgs.legacyPackages.${builtins.currentSystem}.stdenv.isLinux
+        then "/home/heisenkebab"
+        else "/Users/heisenkebab";
     };
 
     # ------------------------------------
@@ -219,6 +224,7 @@
 
           home-manager.darwinModules.home-manager
           {
+            nixpkgs.config.allowUnfree = true;
             home-manager = {
               useGlobalPkgs = true;
               useUserPackages = true;
@@ -232,16 +238,25 @@
               };
             };
           }
+          nix-homebrew.darwinModules.nix-homebrew
+          {
+            nix-homebrew = {
+              enable = true;
+              enableRosetta = true;
+              user = user.name;
+              autoMigrate = true;
+            };
+          }
         ];
       };
     };
 
     linuxHosts = builtins.filter (h: h.system.os == "linux") hosts;
-    #darwinHosts = builtins.filter (h: h.system.os == "darwin") hosts;
+    darwinHosts = builtins.filter (h: h.system.os == "darwin") hosts;
   in {
     nixosConfigurations = builtins.listToAttrs (map forLinuxHosts linuxHosts);
 
-    #darwinConfigurations =
-    #  builtins.listToAttrs (map forDarwinHosts darwinHosts);
+    darwinConfigurations =
+      builtins.listToAttrs (map forDarwinHosts darwinHosts);
   };
 }

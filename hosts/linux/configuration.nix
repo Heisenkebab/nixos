@@ -11,8 +11,11 @@
 
       ./hardware-configuration.nix
 
-      ../../nixos
-      ../../modules
+      ../../systems/linux
+      ../../systems/shared
+
+      ../../modules/linux
+      ../../modules/shared
     ]
     ++ (
       if meta.system.dGpu == "AMD" || meta.system.iGpu == "AMD"

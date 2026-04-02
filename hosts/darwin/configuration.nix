@@ -1,61 +1,25 @@
 {
   inputs,
-  pkgs,
   user,
   ...
 }: {
   imports = [
     inputs.home-manager.darwinModules.default
 
-    ./hardware-configuration.nix
+    ../../systems/darwin
+    ../../systems/shared
 
-    ../../nixos
-    ../../modules
+    ../../modules/darwin
+    ../../modules/shared
   ];
+  users.users.${user.name} = {
+    name = user.name;
+    home = user.homeDir;
+  };
 
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
-  boot.blacklistedKernelModules = ["kvm" "kvm_intel" "kvm_amd"];
-  boot.kernelPackages = pkgs.linuxPackages_latest;
-  hardware.enableRedistributableFirmware = true;
+#  homebrew.enable = true;
 
   time.timeZone = "Europe/Vienna";
 
-  users.users.${user.name} = {
-    isNormalUser = true;
-    extraGroups = [
-      "wheel"
-      "input"
-      "vboxusers"
-      "docker"
-    ];
-  };
-
-  programs.hyprland = {
-    enable = true;
-    xwayland.enable = true;
-    package = inputs.hyprland.packages."${pkgs.stdenv.hostPlatform.system}".hyprland;
-  };
-
-  xdg.portal = {
-    enable = true;
-    extraPortals = [pkgs.xdg-desktop-portal-gtk];
-    config.common.default = "*";
-  };
-
-  services.greetd = {
-    enable = true;
-    settings = {
-      default_session = {
-        command = "${pkgs.tuigreet}/bin/tuigreet --time --remember --cmd Hyprland";
-
-        user = "greeter";
-      };
-    };
-  };
-  services.logind.settings.Login = {
-    HandlePowerKey = "ignore";
-  };
-
-  system.stateVersion = "25.11";
+  system.stateVersion = 6;
 }

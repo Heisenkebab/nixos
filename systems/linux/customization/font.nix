@@ -1,10 +1,9 @@
 # <https://wiki.nixos.org/wiki/Fonts>
-{pkgs, ...}: {
+_: {
   fonts = {
     enableDefaultPackages = true;
     # Issue: <https://wiki.nixos.org/wiki/Fonts#Flatpak_applications_can.27t_find_system_fonts>
     fontDir.enable = true;
-
     fontconfig = {
       enable = true;
       antialias = true;
@@ -29,10 +28,5 @@
         style = "full";
       };
     };
-
-    packages = with pkgs; [
-      nerd-fonts.hack
-      nerd-fonts.symbols-only
-    ];
   };
 }
