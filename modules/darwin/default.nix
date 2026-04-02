@@ -1,6 +1,6 @@
 _: {
   imports = [
-#    ./homebrew
+    ./homebrew
     ./essentials.nix
   ];
 }

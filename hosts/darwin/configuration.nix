@@ -17,7 +17,13 @@
     home = user.homeDir;
   };
 
-#  homebrew.enable = true;
+  system.primaryUser = user.name;
+
+  homebrew = {
+    enable = true;
+    # Deletes packages not defined in the nix-config
+    onActivation.cleanup = "zap";
+  };
 
   time.timeZone = "Europe/Vienna";
 
