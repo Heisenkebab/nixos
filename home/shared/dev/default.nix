@@ -6,5 +6,6 @@ _: {
     ./direnv.nix
     ./shells
     ./tmux.nix
+    ./git.nix
   ];
 }
