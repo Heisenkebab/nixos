@@ -1,6 +1,8 @@
 {pkgs, ...}: {
   environment.systemPackages = with pkgs; [
-    vesktop
-    prismlauncher
+    notion-app
+    raycast
+    utm
+    hexfiend
   ];
 }

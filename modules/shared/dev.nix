@@ -26,6 +26,7 @@
     ffmpeg
     sass
     gdb
+    snicat
     # tui
     typioca
     binsider

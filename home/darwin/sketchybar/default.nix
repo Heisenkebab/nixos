@@ -9,31 +9,17 @@ in {
   # SOURCE: https://github.com/h4ckd0tm3/schNixOS
   programs.sketchybar = {
     enable = true;
-    configType = "lua"; # Enables Lua configuration
+    configType = "lua";
     package = pkgs.sketchybar;
 
-    # Required packages for Lua support
     sbarLuaPackage = stable.sbarlua;
     luaPackage = pkgs.lua5_4;
 
-    # Your Lua configuration (path to sketchybarrc or inline text)
     config = {
-      source = ./config; # Directory containing sketchybarrc
+      source = ./config;
       recursive = true;
     };
-
-    # Ensure the service runs correctly
-    service = {
-      enable = true;
-      errorLogFile = "${config.home.homeDirectory}/Library/Logs/sketchybar/sketchybar.err.log";
-      outLogFile = "${config.home.homeDirectory}/Library/Logs/sketchybar/sketchybar.out.log";
-    };
   };
-  # home.file.".config/sketchybar/" = {
-  #  source = ./config;
-  #  recursive = true;
-  #  onChange = "${pkgs.sketchybar}/bin/sketchybar --reload";
-  #};
 
   home.file.".local/share/sketchybar_lua/sketchybar.so" = {
     source = "${stable.sbarlua}/lib/lua/5.5/sketchybar.so";

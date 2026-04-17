@@ -6,6 +6,7 @@
       rustup
       go
       air
+      lua
       nodejs
       yarn
       python313

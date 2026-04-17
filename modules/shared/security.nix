@@ -3,6 +3,7 @@
     # tools
     git-cliff
     gnupg
+    exiftool
 
     nmap
     wireshark
