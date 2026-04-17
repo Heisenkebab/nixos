@@ -6,7 +6,7 @@
   home = {
     username = user.name;
     homeDirectory = user.homeDir;
-    stateVersion = "25.05";
+    stateVersion = "26.05";
   };
 
   programs.git.enable = true;
