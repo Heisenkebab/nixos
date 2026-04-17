@@ -4,7 +4,7 @@
       "files.autoSave" = "onFocusChange";
       "editor.formatOnSave" = true;
       "workbench.sideBar.location" = "right";
-      "workbench.colorTheme" = "One Dark Pro Night Flat";
+      "workbench.colorTheme" = "Catppuccin Mocha";
       "editor.cursorBlinking" = "expand";
       "workbench.iconTheme" = "material-icon-theme";
       "editor.wordWrap" = "on";
