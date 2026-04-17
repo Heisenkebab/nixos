@@ -1,7 +1,8 @@
 {
   description = "NixOS basic flake";
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    stablepkgs.url = "github:NixOS/nixpkgs/nixos-25.11";
     nix-ld.url = "github:Mic92/nix-ld";
 
     home-manager = {
@@ -33,6 +34,7 @@
 
   outputs = inputs @ {
     nixpkgs,
+    stablepkgs,
     home-manager,
     disko,
     spicetify-nix,
@@ -49,6 +51,13 @@
         if nixpkgs.legacyPackages.${builtins.currentSystem}.stdenv.isLinux
         then "/home/heisenkebab"
         else "/Users/heisenkebab";
+    };
+    # ------------------------------------
+    # Systems
+    # ------------------------------------
+    systems = {
+      x86-linux = "x86_64-linux";
+      arm-darwin = "aarch64-darwin";
     };
 
     # ------------------------------------
@@ -163,12 +172,16 @@
     # ------------------------------------
     # build each host
     # ------------------------------------
-    forLinuxHosts = host: {
+    forLinuxHosts = host: let
+      system = systems.x86-linux;
+      stable = import stablepkgs {inherit system;};
+    in {
       name = host.name;
       value = nixpkgs.lib.nixosSystem {
-        system = "x86_64-linux";
+        system = system;
         specialArgs = {
           inherit inputs;
+          inherit stable;
 
           meta = {
             hostname = host.name;
@@ -193,6 +206,7 @@
               extraSpecialArgs = {
                 inherit inputs;
                 inherit spicetify-nix;
+                inherit import stable;
                 meta = host;
                 user = user;
               };
@@ -202,12 +216,16 @@
       };
     };
 
-    forDarwinHosts = host: {
+    forDarwinHosts = host: let
+      system = systems.arm-darwin;
+      stable = import stablepkgs {inherit system;};
+    in {
       name = host.name;
       value = nix-darwin.lib.darwinSystem {
-        system = "aarch64-darwin";
+        system = system;
         specialArgs = {
           inherit inputs;
+          inherit stable;
 
           meta = {
             hostname = host.name;
@@ -233,6 +251,7 @@
               extraSpecialArgs = {
                 inherit inputs;
                 inherit spicetify-nix;
+                inherit import stable;
                 meta = host;
                 user = user;
               };

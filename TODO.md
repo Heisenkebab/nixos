@@ -6,4 +6,4 @@
 - [x] Add disko
 - [] Fix waybar crash 
 - [] Update install.sh
-- [] Update to unstable
+- [x] Update to unstable
