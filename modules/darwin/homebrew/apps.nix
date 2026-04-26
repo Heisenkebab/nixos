@@ -11,6 +11,7 @@ _: {
       # ???
       "microsoft-office"
       "safe-exam-browser"
+      "scroll-reverser"
     ];
   };
 }

@@ -3,6 +3,7 @@ _: {
     casks = [
       # Fonts
       "font-hack-nerd-font"
+      "sf-symbols"
     ];
   };
 }
