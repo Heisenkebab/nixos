@@ -30,6 +30,9 @@
       ms-vscode.cpptools
       ms-vscode.cmake-tools
 
+      # Rust
+      rust-lang.rust-analyzer
+
       # Sql
       (pkgs.vscode-utils.buildVscodeMarketplaceExtension {
         mktplcRef = {
@@ -74,6 +77,7 @@
       usernamehw.errorlens
       eamodio.gitlens
       quicktype.quicktype
+      tauri-apps.tauri-vscode
     ];
     mutableExtensionsDir = false;
     package = pkgs.vscode;
