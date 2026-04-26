@@ -1,6 +1,6 @@
 _: {
   imports = [
-    ./yabai.nix
+    ./yabai
     ./sketchybar.nix
   ];
 }
