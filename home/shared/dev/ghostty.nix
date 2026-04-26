@@ -6,7 +6,7 @@ _: {
     # installVimSyntax = true;
 
     settings = {
-      # theme = "catppuccin-mocha";
+      theme = "catppuccin-mocha";
       font-size = 12;
       font-family = ["Monaco" "Jetbrains Mono"];
       font-thicken = true;
