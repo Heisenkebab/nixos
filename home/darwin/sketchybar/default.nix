@@ -1,6 +1,5 @@
 {
   pkgs,
-  config,
   stable,
   ...
 }: let
@@ -31,8 +30,7 @@ in {
       #!/usr/bin/env ${pkgs.lua5_4}/bin/lua
       package.path = "./?.lua;./?/init.lua;" .. package.path
       -- Load the sketchybar-package and prepare the helper binaries
-      -- require("helpers")
-      print("sketchybarrc")
+      require("helpers")
       require("init")
     '';
     executable = true;
@@ -42,4 +40,6 @@ in {
   home.file.".config/sketchybar/helpers/event_providers/cpu_load/bin/cpu_load".source = "${binaries.cpuLoadBinary}/bin/cpu_load";
   home.file.".config/sketchybar/helpers/event_providers/network_load/bin/network_load".source = "${binaries.networkLoadBinary}/bin/network_load";
   home.file.".config/sketchybar/helpers/menus/bin/menus".source = "${binaries.menusBinary}/bin/menus";
+
+  #home.file."Library/Fonts/sketchybar-app-font.ttf".source = "${pkgs.sketchybar-app-font}/share/fonts/truetype/sketchybar-app-font.ttf";
 }
