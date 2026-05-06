@@ -19,7 +19,7 @@
     ]
     ++ (
       if meta.system.dGpu == "AMD" || meta.system.iGpu == "AMD"
-      then [../../nixos/hardware/amdgpu.nix]
+      then [../../systems/linux/hardware/amdgpu.nix]
       else []
     );
 
