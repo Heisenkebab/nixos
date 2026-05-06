@@ -1,5 +1,5 @@
 {pkgs, ...}: {
-  environment.systemPackages = with pkgs; [  
-    openssl_3 
+  environment.systemPackages = with pkgs; [
+    openssl_3
   ];
 }

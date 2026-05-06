@@ -6,5 +6,5 @@
 
     # Util
     blueman
- ];
+  ];
 }

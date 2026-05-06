@@ -1,7 +1,6 @@
 _: {
   imports = [
-   ./wayland.nix
-   ./security.nix
- ];
-
+    ./wayland.nix
+    ./security.nix
+  ];
 }
