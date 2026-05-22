@@ -21,9 +21,9 @@ jobs:
       - run: nix flake update
       - uses: stefanzweifel/git-auto-commit-action@v4
         with:
-          commit-message: bump flake.nix
-          commit-user_name: Flake Bot
-          commit-author: Flake Bot <actions@github.com>
+          commit_message: bump flake.nix
+          commit_user_name: Flake Bot
+          commit_author: Flake Bot <actions@github.com>
           branch: main
           file_pattern: flake.lock
           skip_dirty_check: false
