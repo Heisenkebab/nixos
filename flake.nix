@@ -29,7 +29,14 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nix-homebrew.url = "github:zhaofengli/nix-homebrew";
+
     nix-jetbrains-plugins.url = "github:nix-community/nix-jetbrains-plugins";
+
+    niri = {
+      url = "github:sodiboo/niri-flake";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
   };
 
   outputs = inputs @ {
@@ -40,6 +47,7 @@
     spicetify-nix,
     nix-darwin,
     nix-homebrew,
+    niri,
     ...
   }: let
     # ------------------------------------
@@ -202,7 +210,12 @@
               useGlobalPkgs = true;
               useUserPackages = true;
               backupFileExtension = "backup";
-              users.${user.name} = import ./hosts/linux/home.nix;
+              users.${user.name} = {
+                imports = [
+                  niri.homeModules.niri
+                  ./hosts/linux/home.nix
+                ];
+              };
               extraSpecialArgs = {
                 inherit inputs;
                 inherit spicetify-nix;

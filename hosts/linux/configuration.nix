@@ -69,4 +69,5 @@
   };
 
   system.stateVersion = "25.11";
+  programs.niri.enable = true;
 }
