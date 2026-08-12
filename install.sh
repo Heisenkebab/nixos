@@ -27,12 +27,16 @@ while true; do
     esac
 done
 
-sudo nix --experimental-features "nix-command flakes" run github:nix-community/disko/latest -- --mode destroy,format,mount ~/nixos/nixos/hardware/disko.nix && \
+sudo nix --experimental-features "nix-command flakes" run github:nix-community/disko/latest -- --mode destroy,format,mount ~/nixos/systems/linux/hardware/disko.nix && \
+
 sudo nixos-generate-config --no-filesystems --root /mnt && \
 sudo cp /mnt/etc/nixos/hardware-configuration.nix ~/nixos/hosts/ && \
 sudo rm -rf /mnt/etc/nixos/configuration.nix && \
 sudo mv ~/nixos/* /mnt/etc/nixos && \
-sudo nixos-install --flake /mnt/etc/nixos#nixos
+
+# TODO: Add selectable config
+
+sudo nixos-install --flake /mnt/etc/nixos#pc
 
 echo "-----------------------------------------------------------"
 echo "INSTALLATION COMPLETE"
