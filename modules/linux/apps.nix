@@ -1,7 +1,8 @@
 {pkgs, ...}: {
   environment.systemPackages = with pkgs; [
-    onlyoffice-desktopeditor
+    onlyoffice-desktopeditors
     ghostty
+    alacritty
     nautilus
 
     # Util

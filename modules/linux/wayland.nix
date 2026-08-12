@@ -12,6 +12,5 @@
     swappy
     wl-clipboard-rs
     imv
-    bibta-cursors
   ];
 }
