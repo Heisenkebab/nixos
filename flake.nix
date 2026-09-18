@@ -84,6 +84,8 @@
           dGpu = "AMD";
           iGpu = "AMD";
         };
+        wm = "niri";
+        bar = "mechabar";
         monitors = [
           {
             name = "eDP-1";
@@ -115,6 +117,8 @@
           dGpu = "AMD";
           iGpu = "AMD";
         };
+        wm = "niri";
+        bar = "mechabar";
         monitors = [
           {
             name = "HDMI-A-1";
@@ -210,6 +214,19 @@
           lanzaboote.nixosModules.lanzaboote
           home-manager.nixosModules.home-manager
           {
+            desktop =
+              (
+                if host ? wm
+                then {wm = host.wm;}
+                else {}
+              )
+              // (
+                if host ? bar
+                then {bar = host.bar;}
+                else {}
+              );
+          }
+          ({config, ...}: {
             home-manager = {
               useGlobalPkgs = true;
               useUserPackages = true;
@@ -225,10 +242,11 @@
                 inherit spicetify-nix;
                 inherit import stable;
                 meta = host;
+                desktop = config.desktop;
                 user = user;
               };
             };
-          }
+          })
         ];
       };
     };

@@ -27,10 +27,14 @@
     layout = {
       gaps = 8;
       border = {
+        enable = false;
+      };
+
+      focus-ring = {
         enable = true;
-        width = 2;
-        active.color = "#e2e2e3";
-        inactive.color = "#414550";
+        width = 4;
+        active.color = "#000948";
+        inactive.color = "#000000";
       };
       # Fill in preset-column-widths / default-column-width to taste, e.g.:
       # preset-column-widths = [

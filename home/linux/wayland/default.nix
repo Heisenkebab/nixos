@@ -1,9 +1,14 @@
-_: {
-  imports = [
-    ./wofi
-    ./hypr
-    ./niri
-    ./waybar
-    ./grimblast.nix
-  ];
+{
+  lib,
+  desktop,
+  ...
+}: {
+  imports =
+    [
+      ./wofi
+      ./grimblast.nix
+    ]
+    ++ lib.optional (desktop.wm == "hyprland") ./hypr
+    ++ lib.optional (desktop.wm == "niri") ./niri
+    ++ lib.optional (desktop.bar == "mechabar") ./waybar/mechabar;
 }

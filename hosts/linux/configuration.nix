@@ -2,6 +2,7 @@
   inputs,
   pkgs,
   lib,
+  config,
   user,
   meta,
   ...
@@ -55,7 +56,7 @@
   };
 
   programs.hyprland = {
-    enable = true;
+    enable = config.desktop.wm == "hyprland";
     xwayland.enable = true;
     package = inputs.hyprland.packages."${pkgs.stdenv.hostPlatform.system}".hyprland;
   };
@@ -70,7 +71,12 @@
     enable = true;
     settings = {
       default_session = {
-        command = "${pkgs.tuigreet}/bin/tuigreet --time --remember --cmd Hyprland";
+        command = let
+          session =
+            if config.desktop.wm == "hyprland"
+            then "Hyprland"
+            else "niri-session";
+        in "${pkgs.tuigreet}/bin/tuigreet --time --remember --cmd ${session}";
 
         user = "greeter";
       };
@@ -82,5 +88,5 @@
   };
 
   system.stateVersion = "25.11";
-  programs.niri.enable = true;
+  programs.niri.enable = config.desktop.wm == "niri";
 }
