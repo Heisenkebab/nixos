@@ -5,6 +5,8 @@
     ./hyprlock.nix
   ];
 
+  wayland.windowManager.hyprland.configType = "lua";
+
   wayland.windowManager.hyprland = {
     enable = true;
     systemd.enable = true;
@@ -190,7 +192,6 @@
         "match:class .*, suppress_event maximize"
 
         "match:class code, opacity 0.9"
-        "match:class jetbrains-idea, opacity 0.9"
         "match:class com.mitchellh.gosttty, opacity 0.9"
 
         "match:class Brave-browser, move workspace 2"

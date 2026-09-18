@@ -9,8 +9,14 @@
     hyprcursor
 
     grimblast
+
+    grim
+    slurp
+
     swappy
+    satty
     wl-clipboard-rs
     imv
+    swaybg
   ];
 }

@@ -4,7 +4,7 @@
     ghostty
     alacritty
     nautilus
-
+    claude-code
     # Util
     blueman
   ];

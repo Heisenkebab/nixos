@@ -30,10 +30,13 @@
     };
     nix-homebrew.url = "github:zhaofengli/nix-homebrew";
 
-    nix-jetbrains-plugins.url = "github:nix-community/nix-jetbrains-plugins";
-
     niri = {
       url = "github:sodiboo/niri-flake";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    lanzaboote = {
+      url = "github:nix-community/lanzaboote/master";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -48,6 +51,7 @@
     nix-darwin,
     nix-homebrew,
     niri,
+    lanzaboote,
     ...
   }: let
     # ------------------------------------
@@ -204,6 +208,7 @@
         modules = [
           ./hosts/linux/configuration.nix
           disko.nixosModules.disko
+          lanzaboote.nixosModules.lanzaboote
           home-manager.nixosModules.home-manager
           {
             home-manager = {
