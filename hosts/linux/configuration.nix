@@ -1,6 +1,7 @@
 {
   inputs,
   pkgs,
+  lib,
   user,
   meta,
   ...
@@ -23,11 +24,23 @@
       else []
     );
 
-  boot.loader.systemd-boot.enable = true;
+  # systemd-boot itself can't be Secure Boot signed; lanzaboote replaces it
+  # with signed Unified Kernel Images while reusing the systemd-boot menu.
+  boot.loader.systemd-boot.enable = lib.mkForce false;
   boot.loader.efi.canTouchEfiVariables = true;
+  boot.lanzaboote = {
+    enable = true;
+    # sbctl 0.18's config.DefaultConfig() hardcodes "/var/lib/sbctl" as the
+    # keydir (config/config.go), regardless of any --database-path flag or
+    # linker default — keep this in sync with wherever `sbctl create-keys`
+    # actually wrote its keys.
+    pkiBundle = "/var/lib/sbctl";
+  };
   boot.blacklistedKernelModules = ["kvm" "kvm_intel" "kvm_amd"];
   boot.kernelPackages = pkgs.linuxPackages_latest;
   hardware.enableRedistributableFirmware = true;
+
+  environment.systemPackages = [pkgs.sbctl];
 
   time.timeZone = "Europe/Vienna";
 
