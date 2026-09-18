@@ -39,7 +39,6 @@
       url = "github:nix-community/lanzaboote/master";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-
   };
 
   outputs = inputs @ {
@@ -60,7 +59,7 @@
     user = {
       name = "heisenkebab";
       homeDir =
-        if nixpkgs.legacyPackages.${builtins.currentSystem}.stdenv.isLinux
+        if nixpkgs.legacyPackages.${builtins.currentSystem}.stdenv.hostPlatform.isLinux
         then "/home/heisenkebab"
         else "/Users/heisenkebab";
     };

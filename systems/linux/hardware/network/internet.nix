@@ -21,7 +21,7 @@
     };
 
     wireless = {
-      userControlled.enable = true;
+      userControlled = true;
     };
 
     nameservers = [
