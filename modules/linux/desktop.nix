@@ -7,7 +7,7 @@
     };
 
     bar = lib.mkOption {
-      type = lib.types.enum ["mechabar" "none"];
+      type = lib.types.enum ["mechabar" "niribar" "none"];
       default = "mechabar";
       description = "Status bar flavor to enable for the chosen window manager.";
     };

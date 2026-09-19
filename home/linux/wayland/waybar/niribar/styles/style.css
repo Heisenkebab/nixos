@@ -1,0 +1,71 @@
+* {
+    font-family: "0xProto Nerd Font", monospace;
+    font-size: 14px;
+    min-height: 0;
+}
+
+window#waybar {
+    background: transparent;
+}
+
+#workspaces,
+#clock,
+#pulseaudio,
+#battery,
+#custom-lock {
+    background: rgba(20, 20, 30, 0.85);
+    color: #e2e2e3;
+    border-radius: 12px;
+    margin: 6px 4px;
+    padding: 0 12px;
+}
+
+#workspaces {
+    padding: 0 6px;
+    margin-left: 8px;
+}
+
+#workspaces button {
+    padding: 0 6px;
+    color: #7f8490;
+    background: transparent;
+    border-radius: 8px;
+}
+
+#workspaces button.active,
+#workspaces button.focused {
+    color: #e2e2e3;
+    background: rgba(255, 255, 255, 0.1);
+}
+
+#workspaces button.urgent {
+    color: #f94144;
+}
+
+#clock {
+    font-weight: bold;
+}
+
+#battery.warning {
+    color: #f9c74f;
+}
+
+#battery.critical {
+    color: #f94144;
+    animation: blink 1s linear infinite;
+}
+
+#custom-lock {
+    margin-right: 8px;
+}
+
+#custom-lock:hover,
+#pulseaudio:hover {
+    background: rgba(255, 255, 255, 0.12);
+}
+
+@keyframes blink {
+    to {
+        opacity: 0.3;
+    }
+}

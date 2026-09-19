@@ -85,7 +85,7 @@
           iGpu = "AMD";
         };
         wm = "niri";
-        bar = "mechabar";
+        bar = "niribar";
         monitors = [
           {
             name = "eDP-1";
@@ -118,7 +118,7 @@
           iGpu = "AMD";
         };
         wm = "niri";
-        bar = "mechabar";
+        bar = "niribar";
         monitors = [
           {
             name = "HDMI-A-1";
