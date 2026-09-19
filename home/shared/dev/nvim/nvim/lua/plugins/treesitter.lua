@@ -1,13 +1,14 @@
 return {
 	{
 		"nvim-treesitter/nvim-treesitter",
+		branch = "master", -- main is the incompatible rewrite; this config uses the legacy API
 		build = function()
 			require("nvim-treesitter.install").update({ with_sync = true })
 		end,
 		event = { "BufEnter" },
 		dependencies = {
 			-- Additional text objects for treesitter
-			"nvim-treesitter/nvim-treesitter-textobjects",
+			{ "nvim-treesitter/nvim-treesitter-textobjects", branch = "master" },
 		},
 		config = function()
 			---@diagnostic disable: missing-fields
