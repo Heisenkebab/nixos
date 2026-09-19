@@ -4,5 +4,6 @@ _: {
     ./wayland.nix
     ./security.nix
     ./apps.nix
+    ./essentials.nix
   ];
 }
