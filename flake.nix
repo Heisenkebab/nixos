@@ -56,12 +56,15 @@
     # ------------------------------------
     # Global user
     # ------------------------------------
-    user = {
-      name = "heisenkebab";
+    username = "heisenkebab";
+    # homeDir depends on the target platform, not on the evaluating machine:
+    # builtins.currentSystem is unavailable in pure eval (e.g. nix flake check).
+    mkUser = os: {
+      name = username;
       homeDir =
-        if nixpkgs.legacyPackages.${builtins.currentSystem}.stdenv.hostPlatform.isLinux
-        then "/home/heisenkebab"
-        else "/Users/heisenkebab";
+        if os == "darwin"
+        then "/Users/${username}"
+        else "/home/${username}";
     };
     # ------------------------------------
     # Systems
@@ -190,6 +193,7 @@
     forLinuxHosts = host: let
       system = systems.x86-linux;
       stable = import stablepkgs {inherit system;};
+      user = mkUser "linux";
     in {
       name = host.name;
       value = nixpkgs.lib.nixosSystem {
@@ -254,6 +258,7 @@
     forDarwinHosts = host: let
       system = systems.arm-darwin;
       stable = import stablepkgs {inherit system;};
+      user = mkUser "darwin";
     in {
       name = host.name;
       value = nix-darwin.lib.darwinSystem {
