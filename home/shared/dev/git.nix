@@ -4,7 +4,7 @@ _: {
     settings = {
       user = {
         name = "Heisenkebab";
-        email = "winnoa21@htl-kaindorf.at";
+        email = "heisenkebab@proton.me";
       };
 
       aliases = {
