@@ -8,6 +8,14 @@
       "editor.cursorBlinking" = "expand";
       "workbench.iconTheme" = "material-icon-theme";
       "editor.wordWrap" = "on";
+      "editor.defaultFormatter" = "esbenp.prettier-vscode";
+      "editor.codeActionsOnSave" = {
+        "source.removeUnusedImports" = "always";
+        "source.organizeImports" = "always";
+      };
+      "[prisma]" = {
+        "editor.defaultFormatter" = "Prisma.prisma";
+      };
     };
   };
 }

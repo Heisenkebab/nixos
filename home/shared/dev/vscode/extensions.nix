@@ -26,6 +26,7 @@
       ms-python.debugpy
 
       # C
+      ms-vscode.cpptools-extension-pack
       ms-vscode.makefile-tools
       ms-vscode.cpptools
       ms-vscode.cmake-tools
@@ -73,11 +74,15 @@
 
       # Utilities
       vscodevim.vim
+      formulahendry.auto-rename-tag
+      aaron-bond.better-comments
       esbenp.prettier-vscode
       usernamehw.errorlens
       eamodio.gitlens
       quicktype.quicktype
       tauri-apps.tauri-vscode
+      james-yu.latex-workshop
+      ms-toolsai.jupyter
     ];
     mutableExtensionsDir = false;
     package = pkgs.vscode;
