@@ -90,14 +90,11 @@ return {
 
             -- Iterate over our servers and set them up
             for name, config in pairs(servers) do
-                require("lspconfig")[name].setup({
-                    cmd = config.cmd,
-                    capabilities = capabilities,
-                    filetypes = config.filetypes,
-                    handlers = vim.tbl_deep_extend("force", {}, default_handlers, config.handlers or {}),
-                    on_attach = on_attach,
-                    settings = config.settings,
-                })           
+                config.capabilities = capabilities
+                config.handlers = vim.tbl_deep_extend("force", {}, default_handlers, config.handlers or {})
+                config.on_attach = on_attach
+                vim.lsp.config(name, config)
+                vim.lsp.enable(name)
             end
 
             -- Configure borderd for LspInfo ui
