@@ -1,4 +1,4 @@
-{pkgs, ...}: {
+{...}: {
   programs.vscode = {
     profiles.default.userSettings = {
       "files.autoSave" = "onFocusChange";
