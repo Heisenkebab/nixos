@@ -74,6 +74,15 @@
       arm-darwin = "aarch64-darwin";
     };
 
+    forAllSystems = f:
+      nixpkgs.lib.genAttrs (builtins.attrValues systems) (
+        system:
+          f (import nixpkgs {
+            inherit system;
+            config.allowUnfree = true;
+          })
+      );
+
     # ------------------------------------
     # Hosts
     # ------------------------------------
@@ -317,5 +326,32 @@
 
     darwinConfigurations =
       builtins.listToAttrs (map forDarwinHosts darwinHosts);
+
+    # use flake ~/nixos#ctf
+    devShells = forAllSystems (pkgs: {
+      ctf = import ./templates/ctf/shell.nix {inherit pkgs;};
+    });
+
+    # nix flake init -t ~/nixos#ctf
+    templates = {
+      ctf = {
+        path = ./templates/ctf;
+        description = "CTF challenge environment (pwn / rev / crypto / web / forensics)";
+        welcomeText = ''
+          # CTF challenge
+
+          You usually do not need this copy -- an `.envrc` containing
+          `use flake ~/nixos#ctf` gets the same shell without pinning a
+          second nixpkgs. Keep this one only if the challenge needs to
+          diverge.
+
+          - `direnv allow` (or `nix develop`) to enter the shell
+          - edit `shell.nix` to add tools for this challenge
+          - drop the binary in as `./chal`, then `python solve.py`
+
+          See `README.md`, including the macOS notes on `gdb`.
+        '';
+      };
+    };
   };
 }
