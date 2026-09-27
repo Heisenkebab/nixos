@@ -1,4 +1,8 @@
-{pkgs, ...}: {
+{
+  stable,
+  pkgs,
+  ...
+}: {
   environment.systemPackages = with pkgs; [
     # tools
     wireguard-tools
@@ -25,7 +29,6 @@
     fastfetch
     ffmpeg
     sass
-    gdb
     snicat
     # tui
     typioca
@@ -35,10 +38,16 @@
     tmux
     lazygit
     btop
-    neovim
+    # nvim-treesitter master is archived and does not support 0.12;
+    # stablepkgs (nixos-25.11) is on 0.11.7, which it does support.
+    stable.neovim
     yazi
     zellij
     minicom
+
+    #ai
+    claude-code
+    github-copilot-cli
 
     # gui
     jetbrains.rider
