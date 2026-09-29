@@ -89,19 +89,13 @@
     spawn-at-startup = [
       {argv = ["waybar"];}
       {argv = ["swaybg" "--image" "${../../../../wallpapers/wallhaven-blonde.png}" "--mode" "fill"];}
+      {argv = ["xwayland-satellite"];}
     ];
     binds = with config.lib.niri.actions; {
       # Custom binds
 
       "Mod+Q".action.spawn = "ghostty";
-      "Mod+Space".action.spawn = [
-        "wofi"
-        "--show"
-        "drun"
-        "-I"
-        "-m"
-        "-i"
-      ];
+      "Mod+Space".action.spawn = "fuzzel";
       "Mod+F".action = maximize-column;
       #"Mod+M".action = maximize-window-to-edges;
       "Mod+C".action = close-window;
@@ -129,6 +123,12 @@
 
       "XF86AudioRaiseVolume".action.spawn = ["wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "0.1+"];
       "XF86AudioLowerVolume".action.spawn = ["wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "0.1-"];
+
+      "XF86AudioPlay".action.spawn = ["playerctl" "play-pause"];
+      "XF86AudioPause".action.spawn = ["playerctl" "play-pause"];
+      "XF86AudioNext".action.spawn = ["playerctl" "next"];
+      "XF86AudioPrev".action.spawn = ["playerctl" "previous"];
+      "XF86AudioStop".action.spawn = ["playerctl" "stop"];
 
       # Focus / move windows and columns
 

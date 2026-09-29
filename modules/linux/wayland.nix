@@ -1,6 +1,5 @@
 {pkgs, ...}: {
   environment.systemPackages = with pkgs; [
-    waybar
     wofi
     hypridle
     hyprlock
@@ -8,15 +7,18 @@
     hyprutils
     hyprcursor
 
-    grimblast
-
+    # niri
     grim
+    xwayland-satellite
     slurp
-
     swappy
     satty
+    swaybg
+
+    # shared
+    grimblast
     wl-clipboard-rs
     imv
-    swaybg
+    waybar
   ];
 }
