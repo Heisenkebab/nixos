@@ -4,6 +4,7 @@
       gcc
       gnumake
       rustup
+      tree-sitter
       go
       air
       lua
