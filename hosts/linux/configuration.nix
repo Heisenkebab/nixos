@@ -39,6 +39,9 @@
   };
   boot.blacklistedKernelModules = ["kvm" "kvm_intel" "kvm_amd"];
   boot.kernelPackages = pkgs.linuxPackages_latest;
+
+  time.hardwareClockInLocalTime = true; # avoids clock skew with Windows
+
   hardware.enableRedistributableFirmware = true;
 
   environment.systemPackages = [pkgs.sbctl];
