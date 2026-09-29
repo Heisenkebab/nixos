@@ -96,8 +96,9 @@ return {
                 vim.lsp.config(name, config)
                 vim.lsp.enable(name)
             end
+            vim.lsp.enable(vim.tbl_keys(servers))
 
-            -- Configure borderd for LspInfo ui
+            -- Configure border for LspInfo ui
             require("lspconfig.ui.windows").default_options.border = "rounded"
 
             -- Configure diagnostics border
