@@ -1,11 +1,14 @@
 {pkgs, ...}: {
   environment.systemPackages = with pkgs; [
-    onlyoffice-desktopeditors
+    # Terminal
     ghostty
     alacritty
+
     nautilus
-    claude-code
+
     # Util
     blueman
+    onlyoffice-desktopeditors
+    playerctl
   ];
 }
