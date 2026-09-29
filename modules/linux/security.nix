@@ -8,5 +8,7 @@
   environment.systemPackages = with pkgs; [
     burpsuite
     gdb
+    openvpn
+    samba
   ];
 }
