@@ -48,8 +48,5 @@
     #ai
     claude-code
     github-copilot-cli
-
-    # gui
-    jetbrains.rider
   ];
 }
