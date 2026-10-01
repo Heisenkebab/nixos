@@ -59,7 +59,7 @@
   };
 
   programs.hyprland = {
-    enable = config.desktop.wm == "hyprland";
+    enable = config.desktop.wm.hyprland.enable;
     xwayland.enable = true;
     package = inputs.hyprland.packages."${pkgs.stdenv.hostPlatform.system}".hyprland;
   };
@@ -76,7 +76,7 @@
       default_session = {
         command = let
           session =
-            if config.desktop.wm == "hyprland"
+            if config.desktop.wm.hyprland.enable
             then "Hyprland"
             else "niri-session";
         in "${pkgs.tuigreet}/bin/tuigreet --time --remember --cmd ${session}";
@@ -91,5 +91,5 @@
   };
 
   system.stateVersion = "25.11";
-  programs.niri.enable = config.desktop.wm == "niri";
+  programs.niri.enable = config.desktop.wm.niri.enable;
 }

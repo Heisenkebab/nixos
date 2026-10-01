@@ -96,8 +96,13 @@
           dGpu = "AMD";
           iGpu = "AMD";
         };
-        wm = "niri";
-        bar = "niribar";
+        wm = {
+          niri = {
+            enable = true;
+            bar = "niribar";
+            additionalSettings = [];
+          };
+        };
         monitors = [
           {
             name = "eDP-1";
@@ -129,8 +134,14 @@
           dGpu = "AMD";
           iGpu = "AMD";
         };
-        wm = "niri";
-        bar = "niribar";
+        wm = {
+          niri = {
+            enable = true;
+            bar = "niribar";
+            additionalSettings = [
+            ];
+          };
+        };
         monitors = [
           {
             name = "HDMI-A-1";
@@ -227,17 +238,7 @@
           lanzaboote.nixosModules.lanzaboote
           home-manager.nixosModules.home-manager
           {
-            desktop =
-              (
-                if host ? wm
-                then {wm = host.wm;}
-                else {}
-              )
-              // (
-                if host ? bar
-                then {bar = host.bar;}
-                else {}
-              );
+            desktop.wm = host.wm or {};
           }
           ({config, ...}: {
             home-manager = {
