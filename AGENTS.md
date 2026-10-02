@@ -30,7 +30,7 @@ A new file under `home/`, `modules/`, or `systems/` must be added to git (`git a
 
 ## Architecture
 
-**Host registry (`flake.nix`)**: the `hosts` list is the single source of truth per machine — `name`, `system.os`/`dGpu`/`iGpu`, `wm`, `monitors`, `workspaceRules`. `forLinuxHosts`/`forDarwinHosts` fold each entry into a `nixosSystem`/`darwinSystem`. Adding a host means adding an entry here, not a new directory tree.
+**Host registry (`flake.nix`)**: the `hosts` list is the single source of truth per machine — `name`, `system.os`/`dGpu`/`iGpu`, `wm`. `forLinuxHosts`/`forDarwinHosts` fold each entry into a `nixosSystem`/`darwinSystem`. Adding a host means adding an entry here, not a new directory tree.
 
 **`desktop.wm.<name>` options** (`modules/linux/desktop.nix`): each compositor (`niri`, `hyprland`) has `enable`, `bar` (`niribar`/`mechabar`/`none`; defaults to `niribar` for niri, `mechabar` for hyprland) and `additionalSettings`. They are set per-host from the flake's `wm` field, which is passed through verbatim as `desktop.wm`:
 ```nix
@@ -49,7 +49,7 @@ lib.optional desktop.wm.hyprland.enable ./hypr
 ```
 Follow this pattern (directory + `lib.optional desktop.wm.<name>.enable ./dir`) for anything that should only load under one compositor — that's how the fuzzel/niri and wofi/hyprland splits work. The waybar flavor (`./waybar/niribar` / `./waybar/mechabar`) is picked from the `bar` of whichever compositor is enabled.
 
-`additionalSettings` is a list of attrsets merged (`lib.mkMerge`) on top of the shared compositor settings — `programs.niri.settings` in `home/linux/wayland/niri/niri.nix`, `wayland.windowManager.hyprland.settings` in `home/linux/wayland/hypr/default.nix`. Lists such as `spawn-at-startup` concatenate rather than replace. Put host-specific compositor config there instead of branching on the hostname inside the shared module.
+`additionalSettings` is a list of attrsets merged (`lib.mkMerge`) on top of the shared compositor settings — `programs.niri.settings` in `home/linux/wayland/niri/niri.nix`, `wayland.windowManager.hyprland.settings` in `home/linux/wayland/hypr/default.nix`. Lists such as `spawn-at-startup` concatenate rather than replace. Put host-specific compositor config there — including monitor layout (niri `outputs`, hyprland `monitor`) and workspace pinning — instead of branching on the hostname inside the shared module.
 
 **Directory tree, by layer**:
 - `hosts/{linux,darwin}/` — per-OS entrypoint: `configuration.nix` (NixOS/nix-darwin system config, hardware-configuration.nix, boot/secure-boot/greetd) and `home.nix` (home-manager root for that OS, sets `home.username`/`homeDirectory`/`stateVersion`).
@@ -61,6 +61,6 @@ Every directory is wired in via a `default.nix` that just lists `imports`; there
 
 **Two nixpkgs channels**: `nixpkgs` (unstable, default for `pkgs`) and `stablepkgs` (`nixos-25.11`, imported once per system as `stable` and threaded through `specialArgs`/`extraSpecialArgs`). Reach for `stable.<pkg>` instead of `pkgs.<pkg>` when unstable has a broken/regressed package (see commit `7985a30`, which pulled `nvim` from stable to dodge a treesitter error) — don't downgrade the whole channel for one package.
 
-**specialArgs asymmetry**: NixOS modules get a trimmed `meta` (`hostname`, `system`, `isLaptop`, `monitors`, `workspaceRules` — no `wm`). Home-manager's `extraSpecialArgs` instead sets `meta = host` (the *full* flake host entry, including `wm`) and separately passes `desktop = config.desktop` (the resolved option, post-`mkOption` defaults). When a home-manager module needs the compositor/bar choice or `additionalSettings`, use `desktop.wm.<name>`, not `meta.wm.<name>` — the latter is the raw host entry, so any field the host omits (e.g. `bar`) is missing instead of defaulted.
+**specialArgs asymmetry**: NixOS modules get a trimmed `meta` (`hostname`, `system`, `isLaptop` — no `wm`). Home-manager's `extraSpecialArgs` instead sets `meta = host` (the *full* flake host entry, including `wm`) and separately passes `desktop = config.desktop` (the resolved option, post-`mkOption` defaults). When a home-manager module needs the compositor/bar choice or `additionalSettings`, use `desktop.wm.<name>`, not `meta.wm.<name>` — the latter is the raw host entry, so any field the host omits (e.g. `bar`) is missing instead of defaulted.
 
 **`nixpkgs.nix`**: a legacy (non-flake) nixpkgs import pinned to the flake.lock revision, used by `shell.nix` for `nix-shell` situations where flakes aren't wanted.

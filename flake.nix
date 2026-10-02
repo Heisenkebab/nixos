@@ -100,30 +100,38 @@
           niri = {
             enable = true;
             bar = "niribar";
-            additionalSettings = [];
+            additionalSettings = [
+              {
+                outputs = {
+                  "eDP-1" = {
+                    mode = {
+                      width = 1920;
+                      height = 1200;
+                      refresh = 165.0;
+                    };
+                    focus-at-startup = true;
+                    position = {
+                      x = 0;
+                      y = 0;
+                    };
+                  };
+
+                  "HDMI-A-1" = {
+                    mode = {
+                      width = 1920;
+                      height = 1080;
+                      refresh = 60.0;
+                    };
+                    position = {
+                      x = 1920;
+                      y = 0;
+                    };
+                  };
+                };
+              }
+            ];
           };
         };
-        monitors = [
-          {
-            name = "eDP-1";
-            dimensions = "1920x1200";
-            scale = 1;
-            primary = true;
-            framerate = 165;
-            position = "0x0";
-            transform = 0;
-          }
-          {
-            name = "HDMI-A-1";
-            dimensions = "1920x1080";
-            scale = 1;
-            primary = false;
-            framerate = 60;
-            position = "1920x0";
-            transform = 0;
-          }
-        ];
-        workspaceRules = [];
       }
       {
         name = "pc";
@@ -139,40 +147,92 @@
             enable = true;
             bar = "niribar";
             additionalSettings = [
+              {
+                outputs = {
+                  "DP-1" = {
+                    mode = {
+                      width = 2560;
+                      height = 1440;
+                      refresh = 239.970;
+                    };
+                    variable-refresh-rate = "on-demand";
+                    focus-at-startup = true;
+                    position = {
+                      x = 1080;
+                      y = 0;
+                    };
+                  };
+
+                  "DP-2" = {
+                    mode = {
+                      width = 1920;
+                      height = 1080;
+                      refresh = 60.0;
+                    };
+                    transform = {
+                      rotation = 90;
+                    };
+                    position = {
+                      x = 0;
+                      y = 0;
+                    };
+                  };
+
+                  "HDMI-A-1" = {
+                    mode = {
+                      width = 1920;
+                      height = 1080;
+                      refresh = 60.0;
+                    };
+                    position = {
+                      x = 1080 + 2560;
+                      y = 0;
+                    };
+                  };
+                };
+
+                # Named workspaces are pinned to an output and sorted by key,
+                # so "browser" is workspace 1 and "chat" workspace 2 on HDMI-A-1.
+                workspaces = {
+                  "01-browser" = {
+                    name = "browser";
+                    open-on-output = "HDMI-A-1";
+                  };
+                  "02-chat" = {
+                    name = "chat";
+                    open-on-output = "HDMI-A-1";
+                  };
+                  "03-music" = {
+                    name = "music";
+                    open-on-output = "DP-2";
+                  };
+                  "04-term" = {
+                    name = "term";
+                    open-on-output = "DP-1";
+                  };
+                };
+                window-rules = [
+                  {
+                    matches = [{app-id = "^brave-browser$";}];
+                    open-on-workspace = "browser";
+                  }
+                  {
+                    matches = [{app-id = "^vesktop$";}];
+                    open-on-workspace = "chat";
+                  }
+                  {
+                    matches = [{app-id = "^[Ss]potify$";}];
+                    open-on-workspace = "music";
+                  }
+                  {
+                    matches = [{app-id = "^com\\.mitchellh\\.ghostty$";}];
+                    open-on-workspace = "term";
+                  }
+                ];
+              }
             ];
           };
         };
-        monitors = [
-          {
-            name = "HDMI-A-1";
-            dimensions = "1920x1080";
-            scale = 1;
-            primary = false;
-            framerate = 144;
-            position = "1920x0";
-            transform = 0;
-          }
-          {
-            name = "DP-1";
-            dimensions = "1920x1080";
-            scale = 1;
-            primary = true;
-            framerate = 144;
-            position = "0x0";
-            transform = 0;
-          }
-        ];
-        workspaceRules = [
-          "1, monitor:DP-1"
-          "2, monitor:HDMI-A-1"
-          "3, monitor:DP-1"
-          "4, monitor:HDMI-A-1"
-          "5, monitor:DP-1"
-          "6, monitor:DP-1"
-          "7, monitor:DP-1"
-          "8, monitor:DP-1"
-          "9, monitor:DP-1"
-        ];
       }
       {
         name = "macBook";
@@ -183,27 +243,6 @@
           dGpu = "NONE";
           iGpu = "APPLE";
         };
-        monitors = [
-          {
-            name = "eDP-1";
-            dimensions = "1920x1200";
-            scale = 1;
-            primary = true;
-            framerate = 165;
-            position = "0x0";
-            transform = 0;
-          }
-          {
-            name = "HDMI-A-1";
-            dimensions = "1920x1080";
-            scale = 1;
-            primary = false;
-            framerate = 60;
-            position = "1920x0";
-            transform = 0;
-          }
-        ];
-        workspaceRules = [];
       }
     ];
 
@@ -226,8 +265,6 @@
             hostname = host.name;
             system = host.system;
             isLaptop = host.isLaptop;
-            monitors = host.monitors;
-            workspaceRules = host.workspaceRules;
           };
           user = user;
         };
@@ -281,8 +318,6 @@
             hostname = host.name;
             system = host.system;
             isLaptop = host.isLaptop;
-            monitors = host.monitors;
-            workspaceRules = host.workspaceRules;
           };
           user = user;
         };

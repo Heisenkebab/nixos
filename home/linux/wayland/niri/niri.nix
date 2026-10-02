@@ -47,48 +47,6 @@
           # ];
         };
 
-        outputs = {
-          "DP-1" = {
-            mode = {
-              width = 2560;
-              height = 1440;
-              refresh = 239.970;
-            };
-            variable-refresh-rate = "on-demand";
-            focus-at-startup = true;
-            position = {
-              x = 1080;
-              y = 0;
-            };
-          };
-
-          "DP-2" = {
-            mode = {
-              width = 1920;
-              height = 1080;
-              refresh = 60.0;
-            };
-            transform = {
-              rotation = 90;
-            };
-            position = {
-              x = 0;
-              y = 0;
-            };
-          };
-
-          "HDMI-A-1" = {
-            mode = {
-              width = 1920;
-              height = 1080;
-              refresh = 60.0;
-            };
-            position = {
-              x = 1080 + 2560;
-              y = 0;
-            };
-          };
-        };
         spawn-at-startup = [
           {argv = ["waybar"];}
           {argv = ["swaybg" "--image" "${../../../../wallpapers/wallhaven-blonde.png}" "--mode" "fill"];}

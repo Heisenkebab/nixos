@@ -1,5 +1,4 @@
 {
-  meta,
   lib,
   desktop,
   ...
@@ -18,12 +17,6 @@
     settings = lib.mkMerge ([
         {
           "$fileManager" = "nautilus";
-
-          monitor =
-            map (
-              m: "${m.name}, ${m.dimensions}@${toString m.framerate}, ${m.position}, ${toString m.scale}"
-            )
-            meta.monitors;
 
           # ENVIRONMENT VARIABLES
           env = [
@@ -203,7 +196,6 @@
             "match:class Brave-browser, move workspace 2"
             "match:class ghostty, move workspace 1"
           ];
-          workspace = meta.workspaceRules;
         }
       ]
       ++ desktop.wm.hyprland.additionalSettings);
