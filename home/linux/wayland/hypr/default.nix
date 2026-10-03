@@ -101,7 +101,6 @@
           # AUTOSTART
           exec-once = [
             "systemctl --user start hyprland-session.target"
-            "waybar &"
             "hyprpaper &"
             "hypridle &"
             "[workspace 2 silent] brave"

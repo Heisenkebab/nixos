@@ -48,7 +48,6 @@
         };
 
         spawn-at-startup = [
-          {argv = ["waybar"];}
           {argv = ["swaybg" "--image" "${../../../../wallpapers/wallhaven-blonde.png}" "--mode" "fill"];}
           {argv = ["xwayland-satellite"];}
           {argv = ["ghostty"];}
