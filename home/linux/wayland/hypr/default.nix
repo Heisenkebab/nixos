@@ -190,7 +190,7 @@
             "match:class .*, suppress_event maximize"
 
             "match:class code, opacity 0.9"
-            "match:class com.mitchellh.gosttty, opacity 0.9"
+            "match:class com.mitchellh.ghostty, opacity 0.9"
 
             "match:class Brave-browser, move workspace 2"
             "match:class ghostty, move workspace 1"
