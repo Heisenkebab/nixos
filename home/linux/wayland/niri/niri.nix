@@ -55,6 +55,17 @@
           {argv = ["spotify"];}
           {argv = ["vesktop"];}
         ];
+
+        window-rules = [
+          {
+            matches = [
+              {app-id = "^com\\.mitchellh\\.ghostty$";}
+              {app-id = "^brave-browser$";}
+              {app-id = "^vesktop$";}
+            ];
+            open-maximized = true;
+          }
+        ];
         binds = with config.lib.niri.actions; {
           # Custom binds
 
