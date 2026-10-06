@@ -15,6 +15,10 @@
             layout = "us";
             options = "grp:alt_shift_toggle,caps:escape";
           };
+          mouse = {
+            accel-profile = "flat";
+            accel-speed = -0.3;
+          };
           touchpad = {
             natural-scroll = true;
             tap = true;
