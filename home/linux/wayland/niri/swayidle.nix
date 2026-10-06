@@ -1,5 +1,12 @@
-{config, ...}: let
-  lock = "pidof swaylock || ${config.programs.swaylock.package}/bin/swaylock -f";
+{
+  config,
+  pkgs,
+  ...
+}: let
+  # swayidle's systemd unit runs with a PATH that only contains bash, so every
+  # command here has to be an absolute store path.
+  niri = "${config.programs.niri.package}/bin/niri";
+  lock = "${pkgs.procps}/bin/pidof swaylock || ${config.programs.swaylock.package}/bin/swaylock -f";
 in {
   services.swayidle = {
     enable = true;
@@ -10,12 +17,12 @@ in {
       }
       {
         timeout = 120; # 2min
-        command = "niri msg action power-off-monitors";
-        resumeCommand = "niri msg action power-on-monitors";
+        command = "${niri} msg action power-off-monitors";
+        resumeCommand = "${niri} msg action power-on-monitors";
       }
       {
         timeout = 900; # 15min
-        command = "systemctl suspend";
+        command = "${pkgs.systemd}/bin/systemctl suspend";
       }
     ];
     events = {
