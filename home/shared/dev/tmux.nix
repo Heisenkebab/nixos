@@ -44,6 +44,9 @@
       # set-option -sa terminal-overrides ",xterm*:Tc"
       set -g mouse on
 
+      # Refresh the compositor socket on attach so new panes survive a relogin
+      set -ga update-environment NIRI_SOCKET
+
       # Vim style pane selection
       bind h select-pane -L
       bind j select-pane -D
