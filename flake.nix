@@ -77,10 +77,16 @@
     forAllSystems = f:
       nixpkgs.lib.genAttrs (builtins.attrValues systems) (
         system:
-          f (import nixpkgs {
-            inherit system;
-            config.allowUnfree = true;
-          })
+          f {
+            pkgs = import nixpkgs {
+              inherit system;
+              config.allowUnfree = true;
+            };
+            stable = import stablepkgs {
+              inherit system;
+              config.allowUnfree = true;
+            };
+          }
       );
 
     # ------------------------------------
@@ -153,7 +159,7 @@
                     mode = {
                       width = 2560;
                       height = 1440;
-                      refresh = 239.970;
+                      refresh = 179.960;
                     };
                     variable-refresh-rate = "on-demand";
                     focus-at-startup = true;
@@ -167,7 +173,7 @@
                     mode = {
                       width = 1920;
                       height = 1080;
-                      refresh = 60.0;
+                      refresh = 143.995;
                     };
                     transform = {
                       rotation = 90;
@@ -182,7 +188,7 @@
                     mode = {
                       width = 1920;
                       height = 1080;
-                      refresh = 60.0;
+                      refresh = 143.995;
                     };
                     position = {
                       x = 1080 + 2560;
@@ -364,8 +370,11 @@
       builtins.listToAttrs (map forDarwinHosts darwinHosts);
 
     # use flake ~/nixos#ctf
-    devShells = forAllSystems (pkgs: {
-      ctf = import ./templates/ctf/shell.nix {inherit pkgs;};
+    devShells = forAllSystems ({
+      pkgs,
+      stable,
+    }: {
+      ctf = import ./templates/ctf/shell.nix {inherit pkgs stable;};
     });
 
     # nix flake init -t ~/nixos#ctf

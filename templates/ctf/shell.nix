@@ -1,7 +1,11 @@
 # The CTF shell itself. Imported both by this directory's flake.nix (when the
 # template is copied into a challenge) and by the nixos flake, which serves it
 # as `devShells.<system>.ctf` -- so there is one list to maintain, not two.
-{pkgs}: let
+# `stable` is nixos-25.11: use `stable.<pkg>` when the unstable build is broken.
+{
+  pkgs,
+  stable,
+}: let
   inherit (pkgs) lib;
   inherit (pkgs.stdenv.hostPlatform) isDarwin isLinux;
 
@@ -44,7 +48,7 @@
       gef
       pwninit
       checksec
-      ltrace
+      stable.ltrace
       strace
     ]
     # the native debugger for Mach-O targets
