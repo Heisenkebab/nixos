@@ -21,7 +21,7 @@ in {
         resumeCommand = "${niri} msg action power-on-monitors";
       }
       {
-        timeout = 900; # 15min
+        timeout = 300; # 5min
         command = "${pkgs.systemd}/bin/systemctl suspend";
       }
     ];
