@@ -1,6 +1,12 @@
-_: {
+{pkgs, ...}: {
   programs.ghostty = {
     enable = true;
+    # nixpkgs' ghostty is Linux-only; on darwin the app comes from homebrew
+    # (modules/darwin/homebrew/apps.nix) and home-manager only writes the config.
+    package =
+      if pkgs.stdenv.hostPlatform.isDarwin
+      then null
+      else pkgs.ghostty;
     enableZshIntegration = true;
     # installVimSyntax = true;
 
