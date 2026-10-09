@@ -31,6 +31,9 @@ jobs:
           extra_nix_config: |
             auto-optimise-store = true
             experimental-features = nix-command flakes
-      - run: nix flake check
+      - run: nix flake check --all-systems
+      # nix flake check does not evaluate darwinConfigurations
+      - name: eval macBook
+        run: nix eval --raw .#darwinConfigurations.macBook.system.drvPath
       - name: deadnix check
         run: nix run nixpkgs#deadnix -- -f

@@ -9,8 +9,10 @@ A single Nix flake building NixOS configs for two Linux hosts (`laptop`, `pc`) a
 ## Commands
 
 ```bash
-# Evaluate everything (both nixosConfigurations, darwinConfigurations, devShells, templates)
-nix flake check
+# Evaluate both nixosConfigurations, devShells (all systems) and templates
+nix flake check --all-systems
+# ...and the Mac, which `nix flake check` skips; pure eval, works from Linux
+nix eval --raw .#darwinConfigurations.macBook.system.drvPath
 
 # Apply a host (run on that host; darwin build must run on the Mac)
 sudo nixos-rebuild switch --flake .#laptop
@@ -26,7 +28,7 @@ nix develop ~/nixos#ctf          # or: echo 'use flake ~/nixos#ctf' > .envrc && 
 nix flake init -t ~/nixos#ctf    # only when a challenge needs its own nixpkgs pin / extra tools
 ```
 
-`.githooks/pre-commit` runs those same three checks (format, deadnix, `nix flake check`) on any commit that stages a `.nix` file or `flake.lock`. It is enabled by the direnv shell (`shell.nix` sets `core.hooksPath`); `git commit --no-verify` skips it.
+`.githooks/pre-commit` runs the same checks as CI (format, deadnix, `nix flake check --all-systems`, macBook eval) on any commit that stages a `.nix` file or `flake.lock`. It is enabled by the direnv shell (`shell.nix` sets `core.hooksPath`); `git commit --no-verify` skips it.
 
 A new file under `home/`, `modules/`, or `systems/` must be added to git (`git add`) before `nix flake check` will see it — the flake evaluates the tracked working tree, not the filesystem.
 

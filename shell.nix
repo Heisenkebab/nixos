@@ -5,4 +5,9 @@ pkgs.mkShell {
     gnupg
     act
   ];
+
+  # Enable .githooks/pre-commit (the CI checks, run locally before a commit).
+  shellHook = ''
+    git config core.hooksPath .githooks
+  '';
 }
