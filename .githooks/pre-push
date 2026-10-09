@@ -1,0 +1,37 @@
+#!/usr/bin/env bash
+# Runs the same checks as .github/workflows/ci.yaml before a push leaves the
+# machine. Enabled by the repo shell (shell.nix sets core.hooksPath). Skip once
+# with `git push --no-verify`.
+set -euo pipefail
+
+# git feeds one "<local ref> <local sha> <remote ref> <remote sha>" line per
+# pushed ref. Nothing to evaluate when none of them carries Nix changes.
+zero=0000000000000000000000000000000000000000
+needed=false
+while read -r _ local_sha _ remote_sha; do
+  [ "$local_sha" = "$zero" ] && continue # deleting a remote branch
+  if [ "$remote_sha" = "$zero" ]; then
+    needed=true # new branch, no base to diff against
+  elif git diff --name-only "$remote_sha" "$local_sha" | grep -qE '(\.nix|^flake\.lock)$'; then
+    needed=true
+  fi
+done
+$needed || exit 0
+
+cd "$(git rev-parse --show-toplevel)"
+
+step() {
+  echo "pre-push: $1"
+  shift
+  if ! "$@"; then
+    echo "pre-push: failed -- fix it, or skip with 'git push --no-verify'" >&2
+    exit 1
+  fi
+}
+
+step "format (alejandra)" nix run nixpkgs#alejandra -- -q -c .
+step "lint (deadnix)" nix run nixpkgs#deadnix -- -f
+step "nix flake check" nix flake check --all-systems
+# `nix flake check` does not evaluate darwinConfigurations, so do it by hand.
+step "eval darwinConfigurations.macBook" \
+  nix eval --raw .#darwinConfigurations.macBook.system.drvPath
