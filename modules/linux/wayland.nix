@@ -20,5 +20,6 @@
     wl-clipboard-rs
     imv
     waybar
+    catppuccin-gtk
   ];
 }

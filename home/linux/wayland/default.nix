@@ -9,6 +9,7 @@ in {
     [
       ./wofi
       ./grimblast.nix
+      ./gtk.nix
     ]
     ++ lib.optional desktop.wm.hyprland.enable ./hypr
     ++ lib.optional desktop.wm.niri.enable ./niri
