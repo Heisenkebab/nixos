@@ -1,7 +1,36 @@
+@define-color rosewater #f5e0dc;
+@define-color flamingo #f2cdcd;
+@define-color pink #f5c2e7;
+@define-color mauve #cba6f7;
+@define-color red #f38ba8;
+@define-color maroon #eba0ac;
+@define-color peach #fab387;
+@define-color yellow #f9e2af;
+@define-color green #a6e3a1;
+@define-color teal #94e2d5;
+@define-color sky #89dceb;
+@define-color sapphire #74c7ec;
+@define-color blue #89b4fa;
+@define-color lavender #b4befe;
+@define-color text #cdd6f4;
+@define-color subtext1 #bac2de;
+@define-color subtext0 #a6adc8;
+@define-color overlay2 #9399b2;
+@define-color overlay1 #7f849c;
+@define-color overlay0 #6c7086;
+@define-color surface2 #585b70;
+@define-color surface1 #45475a;
+@define-color surface0 #313244;
+@define-color base #1e1e2e;
+@define-color mantle #181825;
+@define-color crust #11111b;
+
 * {
     font-family: "0xProto Nerd Font", monospace;
     font-size: 14px;
     min-height: 0;
+    color: @text;
+
 }
 
 window#waybar {
@@ -11,10 +40,8 @@ window#waybar {
 #workspaces,
 #clock,
 #pulseaudio,
-#battery,
-#custom-lock {
-    background: rgba(20, 20, 30, 0.85);
-    color: #e2e2e3;
+#battery {
+    background: @base;
     border-radius: 12px;
     margin: 6px 4px;
     padding: 0 12px;
@@ -27,14 +54,12 @@ window#waybar {
 
 #workspaces button {
     padding: 0 6px;
-    color: #7f8490;
     background: transparent;
     border-radius: 8px;
 }
 
 #workspaces button.active,
 #workspaces button.focused {
-    color: #e2e2e3;
     background: rgba(255, 255, 255, 0.1);
 }
 
@@ -47,21 +72,44 @@ window#waybar {
 }
 
 #battery.warning {
-    color: #f9c74f;
+    color: @yellow;
 }
 
 #battery.critical {
-    color: #f94144;
+    color: @red;
     animation: blink 1s linear infinite;
 }
 
-#custom-lock {
+
+#group-power {
+    background-color: @base;
+    border-radius: 12px;
+    margin: 6px 4px;
+    padding: 0 6px;
     margin-right: 8px;
 }
 
+#custom-power {
+    color: @red
+}
+
+#custom-reboot {
+    color: @yellow;
+}
+
+#custom-lock,
+#custom-reboot,
+#custom-power {
+    padding: 0 10px;
+    font-size: 16px;
+    border-radius: 8px;
+}
+
 #custom-lock:hover,
+#custom-reboot:hover,
+#custom-power:hover,
 #pulseaudio:hover {
-    background: rgba(255, 255, 255, 0.12);
+    background: @surface1;
 }
 
 @keyframes blink {

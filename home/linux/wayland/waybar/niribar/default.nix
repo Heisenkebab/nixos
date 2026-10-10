@@ -12,7 +12,7 @@
 
         modules-left = ["niri/workspaces"];
         modules-center = ["clock"];
-        modules-right = ["pulseaudio" "battery" "custom/lock"];
+        modules-right = ["pulseaudio" "battery" "group/group-power"];
 
         "niri/workspaces" = {
           format = "{icon}";
@@ -49,11 +49,37 @@
           tooltip-format = "{time} remaining";
         };
 
+        "group/group-power" = {
+          orientation = "inherit";
+          drawer = {
+            transition-duration = 500;
+            children-class = "not-power";
+            transition-left-to-right = false;
+          };
+          modules = [
+            "custom/power"
+            "custom/lock"
+            "custom/reboot"
+          ];
+        };
+
         "custom/lock" = {
           format = "󰌾";
           on-click = "swaylock";
           tooltip = true;
           tooltip-format = "Lock screen";
+        };
+
+        "custom/reboot" = {
+          format = "󰜉";
+          tooltip = false;
+          on-click = "reboot";
+        };
+
+        "custom/power" = {
+          format = "";
+          tooltip = false;
+          on-click = "shutdown now";
         };
       }
     ];
