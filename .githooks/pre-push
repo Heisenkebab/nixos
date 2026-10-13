@@ -1,24 +1,29 @@
 #!/usr/bin/env bash
 # Runs the same checks as .github/workflows/ci.yaml before a push leaves the
-# machine. Enabled by the repo shell (shell.nix sets core.hooksPath). Skip once
+# machine, against the commits being pushed rather than the working tree.
+# Enabled by the repo shell (shell.nix sets core.hooksPath). Skip once
 # with `git push --no-verify`.
 set -euo pipefail
 
 # git feeds one "<local ref> <local sha> <remote ref> <remote sha>" line per
-# pushed ref. Nothing to evaluate when none of them carries Nix changes.
+# pushed ref. Collect the tips that carry Nix changes; nothing to evaluate when
+# none of them does.
 zero=0000000000000000000000000000000000000000
-needed=false
+revs=()
 while read -r _ local_sha _ remote_sha; do
   [ "$local_sha" = "$zero" ] && continue # deleting a remote branch
   if [ "$remote_sha" = "$zero" ]; then
-    needed=true # new branch, no base to diff against
+    revs+=("$local_sha") # new branch, no base to diff against
   elif git diff --name-only "$remote_sha" "$local_sha" | grep -qE '(\.nix|^flake\.lock)$'; then
-    needed=true
+    revs+=("$local_sha")
   fi
 done
-$needed || exit 0
+[ ${#revs[@]} -gt 0 ] || exit 0
 
 cd "$(git rev-parse --show-toplevel)"
+
+work=$(mktemp -d)
+trap 'rm -rf "$work"' EXIT
 
 step() {
   echo "pre-push: $1"
@@ -29,9 +34,22 @@ step() {
   fi
 }
 
-step "format (alejandra)" nix run nixpkgs#alejandra -- -q -c .
-step "lint (deadnix)" nix run nixpkgs#deadnix -- -f
-step "nix flake check" nix flake check --all-systems
-# `nix flake check` does not evaluate darwinConfigurations, so do it by hand.
-step "eval darwinConfigurations.macBook" \
-  nix eval --raw .#darwinConfigurations.macBook.system.drvPath
+for rev in "${revs[@]}"; do
+  short=$(git rev-parse --short "$rev")
+  tree="$work/$short"
+  mkdir -p "$tree"
+
+  # Check what is actually being pushed. Running in the repo itself would
+  # evaluate the working tree instead: uncommitted edits would be checked (and
+  # make nix warn "Git tree is dirty"), while a file left out of the commit
+  # would still be found locally and only break for everyone else.
+  git archive "$rev" | tar -x -C "$tree"
+
+  echo "pre-push: $short"
+  step "format (alejandra)" nix run nixpkgs#alejandra -- -q -c "$tree"
+  step "lint (deadnix)" nix run nixpkgs#deadnix -- -f "$tree"
+  step "nix flake check" nix flake check --all-systems "$tree"
+  # `nix flake check` does not evaluate darwinConfigurations, so do it by hand.
+  step "eval darwinConfigurations.macBook" \
+    nix eval --raw "$tree#darwinConfigurations.macBook.system.drvPath"
+done
