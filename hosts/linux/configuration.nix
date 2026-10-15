@@ -55,8 +55,11 @@
       "input"
       "vboxusers"
       "docker"
+      "uinput" # espanso injects text through /dev/uinput
     ];
   };
+
+  hardware.uinput.enable = true;
 
   programs.hyprland = {
     enable = config.desktop.wm.hyprland.enable;
