@@ -55,11 +55,18 @@
       "input"
       "vboxusers"
       "docker"
-      "uinput" # espanso injects text through /dev/uinput
     ];
   };
 
-  hardware.uinput.enable = true;
+  # espanso's evdev backend reads /dev/input/* and writes /dev/uinput; the wrapper
+  # grants that via a capability instead of the uinput group.
+  # The home-manager unit starts /run/wrappers/bin/espanso (home/shared/apps/espanso.nix).
+  security.wrappers.espanso = {
+    source = lib.getExe pkgs.espanso-wayland;
+    capabilities = "cap_dac_override+p";
+    owner = "root";
+    group = "root";
+  };
 
   programs.hyprland = {
     enable = config.desktop.wm.hyprland.enable;
