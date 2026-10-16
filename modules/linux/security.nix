@@ -10,5 +10,6 @@
     gdb
     openvpn
     samba
+    binaryninja-free
   ];
 }
