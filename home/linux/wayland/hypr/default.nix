@@ -5,7 +5,8 @@
 }: {
   imports = [
     ./hyprpaper.nix
-    ./hypridle.nix
+    # idle is handled by noctalia (home/linux/wayland/noctalia); kept for fallback
+    # ./hypridle.nix
     ./hyprlock.nix
   ];
 

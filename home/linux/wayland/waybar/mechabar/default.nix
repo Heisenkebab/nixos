@@ -3,7 +3,7 @@
 
   programs.waybar = {
     enable = true;
-    systemd.enable = true;
+    #systemd.enable = true;
     style = builtins.readFile ./styles/style.css;
     settings = [
       {

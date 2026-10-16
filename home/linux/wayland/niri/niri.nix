@@ -52,7 +52,8 @@
         };
 
         spawn-at-startup = [
-          {argv = ["swaybg" "--image" "${../../../../wallpapers/wallhaven-black.png}" "--mode" "fill"];}
+          #{argv = ["swaybg" "--image" "${../../../../wallpapers/wallhaven-black.png}" "--mode" "fill"];}
+          {argv = ["noctalia"];}
           {argv = ["xwayland-satellite"];}
           {argv = ["ghostty"];}
           {argv = ["brave"];}
@@ -108,7 +109,7 @@
 
           "Mod+T".action.spawn = "alacritty";
           "Mod+D".action.spawn = "fuzzel";
-          "Super+Alt+L".action.spawn = "swaylock";
+          "Super+Alt+L".action.spawn = ["noctalia" "msg" "session" "lock"];
 
           "XF86AudioRaiseVolume".action.spawn = ["wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "0.1+"];
           "XF86AudioLowerVolume".action.spawn = ["wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "0.1-"];

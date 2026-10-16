@@ -2,7 +2,8 @@
   imports = [
     ./niri.nix
     ./swaylock.nix
-    ./swayidle.nix
     ./fuzzel.nix
+    # idle is handled by noctalia (home/linux/wayland/noctalia); kept for fallback
+    # ./swayidle.nix
   ];
 }
