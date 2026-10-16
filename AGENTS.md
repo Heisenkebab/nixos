@@ -4,7 +4,7 @@ This file provides guidance to coding agents (Claude Code, Codex, etc.) when wor
 
 ## What this is
 
-A single Nix flake building NixOS configs for two Linux hosts (`laptop`, `pc`) and a nix-darwin config for one Mac (`macBook`), sharing home-manager modules across all three. Everything is driven from the `hosts` list in `flake.nix` — there is no per-host directory tree; hosts are data, not code.
+A single Nix flake building NixOS configs for Linux hosts (`laptop`, `pc`, and `pc-hyprland` — the same machine as `pc` booting Hyprland instead of niri) and a nix-darwin config for one Mac (`macBook`), sharing home-manager modules across all three. Everything is driven from the `hosts` list in `flake.nix` — there is no per-host directory tree; hosts are data, not code.
 
 ## Commands
 
@@ -34,7 +34,7 @@ A new file under `home/`, `modules/`, `options/`, or `systems/` must be added to
 
 ## Architecture
 
-**Host registry (`flake.nix`)**: the `hosts` list is the single source of truth per machine — `name`, `system.os`/`dGpu`/`iGpu`, `wm`. `forLinuxHosts`/`forDarwinHosts` fold each entry into a `nixosSystem`/`darwinSystem`. Adding a host means adding an entry here, not a new directory tree.
+**Host registry (`flake.nix`)**: the `hosts` list is the single source of truth per machine — `name`, optional `hostname` (defaults to `name`; lets two entries share one machine's hostname), `system.os`/`dGpu`/`iGpu`, `monitors`, `wm`. `forLinuxHosts`/`forDarwinHosts` fold each entry into a `nixosSystem`/`darwinSystem`. Adding a host means adding an entry here, not a new directory tree.
 
 **`desktop.wm.<name>` options** (`options/desktop.nix`): each compositor (`niri`, `hyprland`) has `enable`, `bar` (`niribar`/`mechabar`/`none`; defaults to `niribar` for niri, `mechabar` for hyprland) and `additionalSettings`. They are set per-host from the flake's `wm` field, which is passed through verbatim as `desktop.wm`:
 ```nix
@@ -53,7 +53,9 @@ lib.optional desktop.wm.hyprland.enable ./hypr
 ```
 Follow this pattern (directory + `lib.optional desktop.wm.<name>.enable ./dir`) for anything that should only load under one compositor — that's how the fuzzel/niri and wofi/hyprland splits work. The waybar flavor (`./waybar/niribar` / `./waybar/mechabar`) is picked from the `bar` of whichever compositor is enabled.
 
-`additionalSettings` is a list of attrsets merged (`lib.mkMerge`) on top of the shared compositor settings — `programs.niri.settings` in `home/linux/wayland/niri/niri.nix`, `wayland.windowManager.hyprland.settings` in `home/linux/wayland/hypr/default.nix`. Lists such as `spawn-at-startup` concatenate rather than replace. Put host-specific compositor config there — workspace pinning, window rules — instead of branching on the hostname inside the shared module.
+`additionalSettings` is a list of attrsets merged (`lib.mkMerge`) on top of the shared compositor settings — `programs.niri.settings` in `home/linux/wayland/niri/niri.nix`, `wayland.windowManager.hyprland.settings` in `home/linux/wayland/hypr/default.nix`.
+
+Hyprland uses the **Lua** config (`configType = "lua"`): the config itself is hand-written Lua in `home/linux/wayland/hypr/lua/` (`init.lua` requires the rest; installed as `~/.config/hypr/user/*.lua`), and Nix only supplies data (`nix/monitors.lua` from `desktop.monitors`). Hyprland `settings` entries (additionalSettings, `grimblast.nix`) render as `hl.<name>(...)` calls, so they must use the Lua API (`_args` + `lib.generators.mkLuaInline`), not hyprlang strings like `"SUPER, Q, exec, ..."`. Lists such as `spawn-at-startup` concatenate rather than replace. Put host-specific compositor config there — workspace pinning, window rules — instead of branching on the hostname inside the shared module.
 
 **`desktop.monitors`** (`options/desktop.nix`, set from the host's `monitors` list in `flake.nix`): one compositor-neutral entry per monitor (`name`, `width`/`height`/`refresh`, `x`/`y` in logical pixels, `scale` (null = auto), `rotation`, `vrr`, `primary`). niri.nix turns it into `outputs`, hypr/default.nix into `hl.monitor` rules, and noctalia uses the `primary` one for the lockscreen. Define monitors there, not as niri `outputs`/hyprland `monitor` in `additionalSettings` (which is merged after, so it still works as a one-off override).
 

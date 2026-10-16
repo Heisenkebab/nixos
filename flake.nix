@@ -211,6 +211,52 @@
         };
       }
       {
+        # same machine as `pc`, booting Hyprland instead of niri:
+        # sudo nixos-rebuild switch --flake .#pc-hyprland
+        name = "pc-hyprland";
+        hostname = "pc";
+        isLaptop = false;
+        system = {
+          os = "linux";
+          desktop = "wayland";
+          dGpu = "AMD";
+          iGpu = "AMD";
+        };
+        monitors = [
+          {
+            name = "DP-1";
+            width = 2560;
+            height = 1440;
+            refresh = 179.960;
+            vrr = true;
+            primary = true;
+            x = 1080;
+          }
+          {
+            # portrait, so it is 1080 logical pixels wide
+            name = "DP-2";
+            width = 1920;
+            height = 1080;
+            refresh = 143.995;
+            rotation = 90;
+          }
+          {
+            name = "HDMI-A-1";
+            width = 1920;
+            height = 1080;
+            refresh = 143.995;
+            x = 1080 + 2560;
+          }
+        ];
+        wm = {
+          hyprland = {
+            enable = true;
+            bar = "none"; # noctalia draws the bar
+            additionalSettings = [];
+          };
+        };
+      }
+      {
         name = "macBook";
         isLaptop = true;
         system = {
@@ -238,7 +284,7 @@
           inherit stable;
 
           meta = {
-            hostname = host.name;
+            hostname = host.hostname or host.name;
             system = host.system;
             isLaptop = host.isLaptop;
           };
@@ -292,7 +338,7 @@
           inherit stable;
 
           meta = {
-            hostname = host.name;
+            hostname = host.hostname or host.name;
             system = host.system;
             isLaptop = host.isLaptop;
           };

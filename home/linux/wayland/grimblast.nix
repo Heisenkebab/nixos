@@ -18,14 +18,16 @@
       '';
     };
   };
-  wayland.windowManager.hyprland = {
-    settings = {
-      bind = [
-        ", Print, exec, ${lib.getExe pkgs.grimblast} save screen - | ${lib.getExe pkgs.swappy} -f -"
-        "SHIFT, Print, exec, ${lib.getExe pkgs.grimblast} save area - | ${lib.getExe pkgs.swappy} -f -"
-        "CTRL ALT, Print, exec, ${lib.getExe pkgs.grimblast} save active - | ${lib.getExe pkgs.swappy} -f -"
-        "CTRL, Print, exec, ${lib.getExe pkgs.grimblast} save output - | ${lib.getExe pkgs.swappy} -f -"
-      ];
+  # Lua config: each entry renders as hl.bind("<keys>", hl.dsp.exec_cmd("<cmd>")).
+  wayland.windowManager.hyprland.settings.bind = let
+    shot = mode: "${lib.getExe pkgs.grimblast} save ${mode} - | ${lib.getExe pkgs.swappy} -f -";
+    bind = keys: mode: {
+      _args = [keys (lib.generators.mkLuaInline "hl.dsp.exec_cmd(${lib.generators.toLua {} (shot mode)})")];
     };
-  };
+  in [
+    (bind "Print" "screen")
+    (bind "SHIFT + Print" "area")
+    (bind "CTRL + ALT + Print" "active")
+    (bind "CTRL + Print" "output")
+  ];
 }
