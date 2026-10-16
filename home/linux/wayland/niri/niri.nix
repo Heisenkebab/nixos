@@ -218,5 +218,22 @@
         };
       }
     ]
+    ++ [
+      {
+        outputs = lib.listToAttrs (map (m:
+          lib.nameValuePair m.name {
+            mode = {inherit (m) width height refresh;};
+            position = {inherit (m) x y;};
+            inherit (m) scale;
+            transform.rotation = m.rotation;
+            focus-at-startup = m.primary;
+            variable-refresh-rate =
+              if m.vrr
+              then "on-demand"
+              else false;
+          })
+        desktop.monitors);
+      }
+    ]
     ++ desktop.wm.niri.additionalSettings);
 }

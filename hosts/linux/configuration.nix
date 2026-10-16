@@ -16,6 +16,7 @@
       ../../systems/linux
       ../../systems/shared
 
+      ../../options
       ../../modules/linux
       ../../modules/shared
     ]

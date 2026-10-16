@@ -30,13 +30,13 @@ nix flake init -t ~/nixos#ctf    # only when a challenge needs its own nixpkgs p
 
 `.githooks/pre-push` runs the same checks as CI (format, deadnix, `nix flake check --all-systems`, macBook eval) on any push whose commits touch a `.nix` file or `flake.lock`. It is enabled by the direnv shell (`shell.nix` sets `core.hooksPath`); `git push --no-verify` skips it.
 
-A new file under `home/`, `modules/`, or `systems/` must be added to git (`git add`) before `nix flake check` will see it — the flake evaluates the tracked working tree, not the filesystem.
+A new file under `home/`, `modules/`, `options/`, or `systems/` must be added to git (`git add`) before `nix flake check` will see it — the flake evaluates the tracked working tree, not the filesystem.
 
 ## Architecture
 
 **Host registry (`flake.nix`)**: the `hosts` list is the single source of truth per machine — `name`, `system.os`/`dGpu`/`iGpu`, `wm`. `forLinuxHosts`/`forDarwinHosts` fold each entry into a `nixosSystem`/`darwinSystem`. Adding a host means adding an entry here, not a new directory tree.
 
-**`desktop.wm.<name>` options** (`modules/linux/desktop.nix`): each compositor (`niri`, `hyprland`) has `enable`, `bar` (`niribar`/`mechabar`/`none`; defaults to `niribar` for niri, `mechabar` for hyprland) and `additionalSettings`. They are set per-host from the flake's `wm` field, which is passed through verbatim as `desktop.wm`:
+**`desktop.wm.<name>` options** (`options/desktop.nix`): each compositor (`niri`, `hyprland`) has `enable`, `bar` (`niribar`/`mechabar`/`none`; defaults to `niribar` for niri, `mechabar` for hyprland) and `additionalSettings`. They are set per-host from the flake's `wm` field, which is passed through verbatim as `desktop.wm`:
 ```nix
 wm = {
   niri = {
@@ -53,11 +53,14 @@ lib.optional desktop.wm.hyprland.enable ./hypr
 ```
 Follow this pattern (directory + `lib.optional desktop.wm.<name>.enable ./dir`) for anything that should only load under one compositor — that's how the fuzzel/niri and wofi/hyprland splits work. The waybar flavor (`./waybar/niribar` / `./waybar/mechabar`) is picked from the `bar` of whichever compositor is enabled.
 
-`additionalSettings` is a list of attrsets merged (`lib.mkMerge`) on top of the shared compositor settings — `programs.niri.settings` in `home/linux/wayland/niri/niri.nix`, `wayland.windowManager.hyprland.settings` in `home/linux/wayland/hypr/default.nix`. Lists such as `spawn-at-startup` concatenate rather than replace. Put host-specific compositor config there — including monitor layout (niri `outputs`, hyprland `monitor`) and workspace pinning — instead of branching on the hostname inside the shared module.
+`additionalSettings` is a list of attrsets merged (`lib.mkMerge`) on top of the shared compositor settings — `programs.niri.settings` in `home/linux/wayland/niri/niri.nix`, `wayland.windowManager.hyprland.settings` in `home/linux/wayland/hypr/default.nix`. Lists such as `spawn-at-startup` concatenate rather than replace. Put host-specific compositor config there — workspace pinning, window rules — instead of branching on the hostname inside the shared module.
+
+**`desktop.monitors`** (`options/desktop.nix`, set from the host's `monitors` list in `flake.nix`): one compositor-neutral entry per monitor (`name`, `width`/`height`/`refresh`, `x`/`y` in logical pixels, `scale` (null = auto), `rotation`, `vrr`, `primary`). niri.nix turns it into `outputs`, hypr/default.nix into `hl.monitor` rules, and noctalia uses the `primary` one for the lockscreen. Define monitors there, not as niri `outputs`/hyprland `monitor` in `additionalSettings` (which is merged after, so it still works as a one-off override).
 
 **Directory tree, by layer**:
 - `hosts/{linux,darwin}/` — per-OS entrypoint: `configuration.nix` (NixOS/nix-darwin system config, hardware-configuration.nix, boot/secure-boot/greetd) and `home.nix` (home-manager root for that OS, sets `home.username`/`homeDirectory`/`stateVersion`).
-- `modules/{linux,shared,darwin}/` — system-level NixOS/nix-darwin modules (packages, security, fonts, desktop option definitions).
+- `options/` — option declarations only (`desktop.wm`, `desktop.monitors`), no config; imported by `hosts/linux/configuration.nix`.
+- `modules/{linux,shared,darwin}/` — system-level NixOS/nix-darwin modules (packages, security, fonts).
 - `systems/{linux,shared,darwin}/` — lower-level system concerns split further by topic (`hardware/`, `security/`, `container/`, `customization/`, `system/`, darwin `services/`). Each subdirectory is a module via its own `default.nix`.
 - `home/{linux,shared,darwin}/` — home-manager modules (dotfiles-equivalent config: wayland compositors, dev tooling, apps). Mirrors the same linux/shared/darwin split as `modules/` and `systems/`.
 

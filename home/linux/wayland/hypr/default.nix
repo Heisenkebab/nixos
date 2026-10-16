@@ -197,6 +197,28 @@
           ];
         }
       ]
+      ++ [
+        {
+          # rendered as one hl.monitor({...}) call per entry
+          monitor =
+            map (m: {
+              output = m.name;
+              mode = "${toString m.width}x${toString m.height}@${toString m.refresh}";
+              position = "${toString m.x}x${toString m.y}";
+              scale =
+                if m.scale == null
+                then "auto"
+                else toString m.scale;
+              transform = m.rotation / 90;
+              # 2 = only for fullscreen apps, closest to niri's "on-demand"
+              vrr =
+                if m.vrr
+                then 2
+                else 0;
+            })
+            desktop.monitors;
+        }
+      ]
       ++ desktop.wm.hyprland.additionalSettings);
 
     extraConfig = ''

@@ -102,40 +102,27 @@
           dGpu = "AMD";
           iGpu = "AMD";
         };
+        monitors = [
+          {
+            name = "eDP-1";
+            width = 1920;
+            height = 1200;
+            refresh = 165.0;
+            primary = true;
+          }
+          {
+            name = "HDMI-A-1";
+            width = 1920;
+            height = 1080;
+            refresh = 60.0;
+            x = 1920;
+          }
+        ];
         wm = {
           niri = {
             enable = true;
             bar = "niribar";
-            additionalSettings = [
-              {
-                outputs = {
-                  "eDP-1" = {
-                    mode = {
-                      width = 1920;
-                      height = 1200;
-                      refresh = 165.0;
-                    };
-                    focus-at-startup = true;
-                    position = {
-                      x = 0;
-                      y = 0;
-                    };
-                  };
-
-                  "HDMI-A-1" = {
-                    mode = {
-                      width = 1920;
-                      height = 1080;
-                      refresh = 60.0;
-                    };
-                    position = {
-                      x = 1920;
-                      y = 0;
-                    };
-                  };
-                };
-              }
-            ];
+            additionalSettings = [];
           };
         };
       }
@@ -148,55 +135,38 @@
           dGpu = "AMD";
           iGpu = "AMD";
         };
+        monitors = [
+          {
+            name = "DP-1";
+            width = 2560;
+            height = 1440;
+            refresh = 179.960;
+            vrr = true;
+            primary = true;
+            x = 1080;
+          }
+          {
+            # portrait, so it is 1080 logical pixels wide
+            name = "DP-2";
+            width = 1920;
+            height = 1080;
+            refresh = 143.995;
+            rotation = 90;
+          }
+          {
+            name = "HDMI-A-1";
+            width = 1920;
+            height = 1080;
+            refresh = 143.995;
+            x = 1080 + 2560;
+          }
+        ];
         wm = {
           niri = {
             enable = true;
             bar = "niribar";
             additionalSettings = [
               {
-                outputs = {
-                  "DP-1" = {
-                    mode = {
-                      width = 2560;
-                      height = 1440;
-                      refresh = 179.960;
-                    };
-                    variable-refresh-rate = "on-demand";
-                    focus-at-startup = true;
-                    position = {
-                      x = 1080;
-                      y = 0;
-                    };
-                  };
-
-                  "DP-2" = {
-                    mode = {
-                      width = 1920;
-                      height = 1080;
-                      refresh = 143.995;
-                    };
-                    transform = {
-                      rotation = 90;
-                    };
-                    position = {
-                      x = 0;
-                      y = 0;
-                    };
-                  };
-
-                  "HDMI-A-1" = {
-                    mode = {
-                      width = 1920;
-                      height = 1080;
-                      refresh = 143.995;
-                    };
-                    position = {
-                      x = 1080 + 2560;
-                      y = 0;
-                    };
-                  };
-                };
-
                 # Named workspaces are pinned to an output and sorted by key,
                 # so "browser" is workspace 1 and "chat" workspace 2 on HDMI-A-1.
                 workspaces = {
@@ -282,6 +252,7 @@
           home-manager.nixosModules.home-manager
           {
             desktop.wm = host.wm or {};
+            desktop.monitors = host.monitors or [];
           }
           ({config, ...}: {
             home-manager = {
