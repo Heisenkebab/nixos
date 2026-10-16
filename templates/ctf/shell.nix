@@ -61,8 +61,6 @@
     upx
     jadx
     apktool
-    # ghidra # pulls a JDK, ~1G closure
-    # cutter
   ];
 
   crypto = with pkgs; [
@@ -79,7 +77,6 @@
     nmap
     socat
     netcat-gnu
-    # burpsuite
   ];
 
   forensics = with pkgs;
@@ -105,8 +102,14 @@
     hashcat
     hashcat-utils
     hashid
-    # wordlists # rockyou and friends, multi-GB
-    # seclists
+    # rockyou is substituted from the binary cache on its own, so it doesn't
+    # drag in the full seclists; nmap's list is free since nmap is in `web`.
+    (wordlists.override {
+      lists = [
+        rockyou
+        nmap
+      ];
+    })
   ];
 
   misc = with pkgs; [
