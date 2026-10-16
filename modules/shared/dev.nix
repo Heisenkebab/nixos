@@ -26,7 +26,6 @@
     zoxide
     bat
     delta
-    fastfetch
     ffmpeg
     sass
     snicat

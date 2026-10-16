@@ -4,5 +4,6 @@ _: {
     ./neofetch.nix
     ./spicetify.nix
     ./espanso.nix
+    ./fastfetch.nix
   ];
 }
