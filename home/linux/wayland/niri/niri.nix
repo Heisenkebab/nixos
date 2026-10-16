@@ -40,7 +40,7 @@
           focus-ring = {
             enable = true;
             width = 4;
-            active.color = "#000948";
+            active.color = "#002375";
             inactive.color = "#000000";
           };
           # Fill in preset-column-widths / default-column-width to taste, e.g.:
@@ -52,7 +52,7 @@
         };
 
         spawn-at-startup = [
-          {argv = ["swaybg" "--image" "${../../../../wallpapers/wallhaven-blonde.png}" "--mode" "fill"];}
+          {argv = ["swaybg" "--image" "${../../../../wallpapers/wallhaven-black.png}" "--mode" "fill"];}
           {argv = ["xwayland-satellite"];}
           {argv = ["ghostty"];}
           {argv = ["brave"];}
@@ -66,7 +66,17 @@
               {app-id = "^com\\.mitchellh\\.ghostty$";}
               {app-id = "^brave-browser$";}
               {app-id = "^vesktop$";}
+              {app-id = "^Spotify$";}
             ];
+            open-maximized = true;
+          }
+          # Opacity
+          {
+            excludes = [
+              {app-id = "^brave-browser$";}
+            ];
+            opacity = 0.9;
+            draw-border-with-background = false;
             open-maximized = true;
           }
         ];
