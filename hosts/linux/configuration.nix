@@ -61,8 +61,10 @@
   # espanso's evdev backend reads /dev/input/* and writes /dev/uinput; the wrapper
   # grants that via a capability instead of the uinput group.
   # The home-manager unit starts /run/wrappers/bin/espanso (home/shared/apps/espanso.nix).
+  # espanso drops its caps in every process but the worker, so the worker must be
+  # re-exec'd through the wrapper too; securityWrapperPath patches the daemon to do that.
   security.wrappers.espanso = {
-    source = lib.getExe pkgs.espanso-wayland;
+    source = lib.getExe (pkgs.espanso-wayland.override {securityWrapperPath = config.security.wrapperDir;});
     capabilities = "cap_dac_override+p";
     owner = "root";
     group = "root";
