@@ -76,6 +76,8 @@ in {
       # swayidle's before-sleep: also lock on lid close / `systemctl suspend`
       lockscreen.lock_before_suspend = true;
 
+      shell.launcher = import ./components/launcher.nix {};
+
       bar = import ./components/bar.nix {};
       lockscreen_widgets = import ./components/lockscreen-widgets.nix {inherit user bounds primaryMon;};
     };

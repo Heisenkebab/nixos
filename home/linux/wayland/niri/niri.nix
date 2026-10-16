@@ -85,7 +85,7 @@
           # Custom binds
 
           "Mod+Q".action.spawn = "ghostty";
-          "Mod+Space".action.spawn = "fuzzel";
+          "Mod+Space".action.spawn = ["noctalia" "msg" "panel-toggle" "launcher"];
           "Mod+F".action = maximize-column;
           #"Mod+M".action = maximize-window-to-edges;
           "Mod+C".action = close-window;
@@ -103,12 +103,12 @@
 
           # --- The rest below are niri's stock default hotkeys, kept as
           # --- placeholders for the keys not already bound above. Tweak
-          # --- freely (e.g. Mod+T/Mod+D still point at alacritty/fuzzel).
+          # --- freely (e.g. Mod+T/Mod+D still point at alacritty/the noctalia launcher).
 
           "Mod+Shift+Slash".action = show-hotkey-overlay;
 
           "Mod+T".action.spawn = "alacritty";
-          "Mod+D".action.spawn = "fuzzel";
+          "Mod+D".action.spawn = ["noctalia" "msg" "panel-toggle" "launcher"];
           "Super+Alt+L".action.spawn = ["noctalia" "msg" "session" "lock"];
 
           "XF86AudioRaiseVolume".action.spawn = ["wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "0.1+"];
