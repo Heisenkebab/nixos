@@ -1,9 +1,14 @@
-_: {
+{primaryMon}: {
   order = ["main"];
 
   default = {
     position = "top";
-    enabled = true;
+    # off everywhere except the primary monitor (desktop.monitors), see `monitor` below
+    enabled = false;
+    monitor.primary = {
+      match = primaryMon.name;
+      enabled = true;
+    };
 
     auto_hide = false;
     smart_auto_hide = false;

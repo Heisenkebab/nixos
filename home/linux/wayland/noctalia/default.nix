@@ -78,7 +78,7 @@ in {
 
       shell.launcher = import ./components/launcher.nix {};
 
-      bar = import ./components/bar.nix {};
+      bar = import ./components/bar.nix {inherit primaryMon;};
       lockscreen_widgets = import ./components/lockscreen-widgets.nix {inherit user bounds primaryMon;};
     };
   };
