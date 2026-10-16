@@ -1,4 +1,8 @@
-{pkgs, ...}: {
+{
+  pkgs,
+  stable,
+  ...
+}: {
   environment.systemPackages = with pkgs;
     [
       gcc
@@ -20,7 +24,7 @@
       nil
       bash-language-server
       vscode-langservers-extracted
-      typescript-language-server
+      stable.typescript-language-server
       tailwindcss-language-server
       marksman
       lua-language-server
