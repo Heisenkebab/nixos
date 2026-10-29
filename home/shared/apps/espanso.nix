@@ -9,9 +9,20 @@
       if pkgs.stdenv.hostPlatform.isDarwin
       then pkgs.espanso
       else pkgs.espanso-wayland;
-    configs.default = {
-      show_notifications = false;
-    };
+    configs.default =
+      {
+        show_notifications = false;
+      }
+      # must match niri's xkb layout; altgr-intl has ä/ö/ü/ß so the evdev injector can type them
+      // lib.optionalAttrs pkgs.stdenv.hostPlatform.isLinux {
+        # the default "Auto" backend always pastes non-ASCII text via the clipboard on Linux,
+        # and the Wayland clipboard backend doesn't work (pastes the old clipboard)
+        backend = "Inject";
+        keyboard_layout = {
+          layout = "us";
+          variant = "altgr-intl";
+        };
+      };
 
     matches.default.matches = [
       {

@@ -13,6 +13,7 @@
         input = {
           keyboard.xkb = {
             layout = "us";
+            variant = "altgr-intl";
             options = "grp:alt_shift_toggle,caps:escape";
           };
           mouse = {
@@ -75,6 +76,7 @@
           {
             excludes = [
               {app-id = "^brave-browser$";}
+              {app-id = "^Minecraft";}
             ];
             opacity = 0.9;
             draw-border-with-background = false;
@@ -212,6 +214,8 @@
           # Screenshots
 
           "Print".action.spawn-sh = "mkdir -p ~/Pictures/Screenshots && grim -g \"$(slurp)\" - | satty --filename - -o ~/Pictures/Screenshots/satty-$(date +%Y%m%d-%H%M%S).png";
+          # whole monitor under the cursor; saved to ~/Pictures/Screenshots and copied to clipboard
+          "Shift+Print".action.screenshot-screen = {};
 
           # Misc
 
