@@ -1,15 +1,17 @@
-{pkgs, ...}: {
+{pkgs, ...}: let
+  # rendered by noctalia's gtk3/gtk4 templates (home/linux/wayland/noctalia)
+  noctaliaCss = ''@import url("noctalia.css");'';
+in {
   gtk = {
     enable = true;
-    gtk4.theme = null;
+    # adw-gtk3 uses libadwaita's named colors, which noctalia.css overrides
     theme = {
-      name = "catppuccin-mocha-blue-standard+black";
-      package = pkgs.catppuccin-gtk.override {
-        size = "standard";
-        tweaks = ["black"];
-        variant = "mocha";
-      };
+      name = "adw-gtk3-dark";
+      package = pkgs.adw-gtk3;
     };
+    gtk4.theme = null;
+    gtk3.extraCss = noctaliaCss;
+    gtk4.extraCss = noctaliaCss;
     gtk3.extraConfig.gtk-application-prefer-dark-theme = true;
   };
 

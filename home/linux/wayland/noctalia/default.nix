@@ -36,6 +36,15 @@ in {
         mode = "dark";
         source = lib.mkForce "builtin";
         builtin = "Catppuccin";
+        # Re-rendered on every theme change. Each one writes a palette file
+        # (e.g. ~/.config/ghostty/themes/noctalia) and its post-hook reloads the
+        # app; the app configs themselves point at those files statically
+        # (ghostty.nix, gtk.nix), since the hooks can't edit read-only HM files.
+        # Catalog: $(noctalia's share)/noctalia/assets/templates/builtin.toml
+        templates = {
+          enable_builtin_templates = true;
+          builtin_ids = ["ghostty" "gtk3" "gtk4"];
+        };
       };
 
       wallpaper = {

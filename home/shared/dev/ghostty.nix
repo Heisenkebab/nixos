@@ -11,7 +11,11 @@
     # installVimSyntax = true;
 
     settings = {
-      theme = "Catppuccin Mocha";
+      # on Linux noctalia renders ~/.config/ghostty/themes/noctalia (home/linux/wayland/noctalia)
+      theme =
+        if pkgs.stdenv.hostPlatform.isDarwin
+        then "Catppuccin Mocha"
+        else "noctalia";
       font-size = 12;
       font-family = ["Monaco" "Jetbrains Mono"];
       font-thicken = true;
