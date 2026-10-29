@@ -136,28 +136,30 @@
           iGpu = "AMD";
         };
         monitors = [
-          {
-            name = "DP-1";
-            width = 2560;
-            height = 1440;
-            refresh = 179.960;
-            vrr = true;
-            primary = true;
-            x = 1080;
-          }
+          # left to right: DP-2 (portrait) | HDMI-A-1 (main) | DP-1
           {
             # portrait, so it is 1080 logical pixels wide
             name = "DP-2";
             width = 1920;
             height = 1080;
-            refresh = 143.995;
+            refresh = 143.980;
             rotation = 90;
           }
           {
+            # Acer X27U; HDMI tops out at 120 Hz on this panel
             name = "HDMI-A-1";
+            width = 2560;
+            height = 1440;
+            refresh = 119.998;
+            vrr = true;
+            primary = true;
+            x = 1080;
+          }
+          {
+            name = "DP-1";
             width = 1920;
             height = 1080;
-            refresh = 143.995;
+            refresh = 143.980;
             x = 1080 + 2560;
           }
         ];
@@ -172,11 +174,11 @@
                 workspaces = {
                   "01-browser" = {
                     name = "browser";
-                    open-on-output = "HDMI-A-1";
+                    open-on-output = "DP-1";
                   };
                   "02-chat" = {
                     name = "chat";
-                    open-on-output = "HDMI-A-1";
+                    open-on-output = "DP-1";
                   };
                   "03-music" = {
                     name = "music";
@@ -184,7 +186,7 @@
                   };
                   "04-term" = {
                     name = "term";
-                    open-on-output = "DP-1";
+                    open-on-output = "HDMI-A-1";
                   };
                 };
                 window-rules = [
@@ -223,28 +225,30 @@
           iGpu = "AMD";
         };
         monitors = [
-          {
-            name = "DP-1";
-            width = 2560;
-            height = 1440;
-            refresh = 179.960;
-            vrr = true;
-            primary = true;
-            x = 1080;
-          }
+          # left to right: DP-2 (portrait) | HDMI-A-1 (main) | DP-1
           {
             # portrait, so it is 1080 logical pixels wide
             name = "DP-2";
             width = 1920;
             height = 1080;
-            refresh = 143.995;
+            refresh = 143.980;
             rotation = 90;
           }
           {
+            # Acer X27U; HDMI tops out at 120 Hz on this panel
             name = "HDMI-A-1";
+            width = 2560;
+            height = 1440;
+            refresh = 119.998;
+            vrr = true;
+            primary = true;
+            x = 1080;
+          }
+          {
+            name = "DP-1";
             width = 1920;
             height = 1080;
-            refresh = 143.995;
+            refresh = 143.980;
             x = 1080 + 2560;
           }
         ];
