@@ -3,6 +3,8 @@ _: {
   virtualisation = {
     docker = {
       enable = true;
+      # Start Docker on first use (socket activation) instead of at boot
+      enableOnBoot = false;
     };
 
     podman = {

@@ -49,6 +49,8 @@
 
   time.timeZone = "Europe/Vienna";
 
+  zramSwap.enable = true;
+
   users.users.${user.name} = {
     isNormalUser = true;
     extraGroups = [
@@ -57,6 +59,11 @@
       "vboxusers"
       "docker"
     ];
+  };
+
+  programs.gamescope = {
+    enable = true;
+    capSysNice = false; # lets gamescope raise its priority; set to false if it fails to start
   };
 
   # espanso's evdev backend reads /dev/input/* and writes /dev/uinput; the wrapper
