@@ -10,5 +10,6 @@
     blueman
     onlyoffice-desktopeditors
     playerctl
+    steam
   ];
 }
